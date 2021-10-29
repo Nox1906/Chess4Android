@@ -7,4 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="chess_board_white">#FFE7CAB3</color>
+    <color name="chess_board_black">#FF804F21</color>
 </resources>
