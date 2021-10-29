@@ -9,12 +9,21 @@ import android.widget.GridLayout
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.views.Tile.Type
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URL
 
 /**
  * Custom view that implements a chess board.
  */
 @SuppressLint("ClickableViewAccessibility")
 class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx, attrs) {
+
+
+    var retrofit = Retrofit.Builder()
+        .baseUrl("https://lichess.org/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     private val side = 8
 
@@ -25,12 +34,13 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
     }
 
     init {
+
         rowCount = side
         columnCount = side
         repeat(side * side) {
             val row = it / side
             val column = it % side
-            val tile = Tile(ctx, if((row + column) % 2 == 0) Type.WHITE else Type.BLACK, side)
+            val tile = Tile(ctx, if ((row + column) % 2 == 0) Type.BLACK else Type.WHITE, side)
             addView(tile)
         }
     }

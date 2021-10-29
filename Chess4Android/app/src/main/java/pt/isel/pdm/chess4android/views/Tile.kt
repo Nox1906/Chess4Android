@@ -27,7 +27,7 @@ class Tile(
 ) : View(ctx) {
 
     private val blackBishopDrawable = VectorDrawableCompat
-        .create(ctx.resources, R.drawable.ic_white_knight, null)
+        .create(ctx.resources, R.drawable.ic_black_queen, null)
 
     enum class Type { WHITE, BLACK }
 
