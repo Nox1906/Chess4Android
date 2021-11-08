@@ -7,10 +7,13 @@ const val URL = "https://lichess.org/api/"
 
 data class PuzzleInfo(val game: Game, val puzzle: Puzzle)
 
-data class Game(val id: String)
+data class Game(
+    val id: String,
+    val pgn: String,
+    )
 data class Puzzle(val id: String)
 
 interface DailyPuzzleService {
-    @GET("puzzle/daily/")
+    @GET("puzzle/daily")
     fun getPuzzle(): Call<PuzzleInfo>
 }

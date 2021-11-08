@@ -5,10 +5,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.GridLayout
+import androidx.lifecycle.MutableLiveData
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import pt.isel.pdm.chess4android.Army
-import pt.isel.pdm.chess4android.Piece
+import pt.isel.pdm.chess4android.MainActivityViewModel
+import pt.isel.pdm.chess4android.MainActivityViewModel.*
+import pt.isel.pdm.chess4android.PuzzleInfo
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.views.Tile.Type
 
@@ -46,8 +49,12 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         createImageEntry(Army.BLACK, Piece.QUEEN, R.drawable.ic_black_queen),
         createImageEntry(Army.BLACK, Piece.KING, R.drawable.ic_black_king),
     )
-
-    init {
+    var puzzleInfo: PuzzleInfo?= null
+    fun init() {
+        val dailyBoard : Array<Array<Pair<Army,Piece>>>
+        getPgnMatrix(puzzleInfo da)
+        Log.v("Daily board ", dailyBoard.toString())
+        Log.v("TAG PuzzleInfo", puzzleInfo?.game?.pgn.toString())
         rowCount = side
         columnCount = side
         repeat(side * side) {
@@ -58,6 +65,7 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
                 if((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
                 piecesImages
+            , Pair(Army.BLACK,Piece.BISHOP)
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)
@@ -72,5 +80,11 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         canvas.drawLine(0f, height.toFloat(), width.toFloat(), height.toFloat(), brush)
         canvas.drawLine(0f, 0f, 0f, height.toFloat(), brush)
         canvas.drawLine(width.toFloat(), 0f, width.toFloat(), height.toFloat(), brush)
+    }
+    fun getPgnMatrix(puzzleInfo: PuzzleInfo?, a: Array<Array<Pair<Army,Piece>>>) {
+
+        a[0][0]= Pair(Army.BLACK,Piece.KNIGHT)
+        a[1][2]= Pair(Army.WHITE,Piece.KING)
+
     }
 }
