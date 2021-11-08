@@ -7,3 +7,5 @@ enum class Army {
 enum class Piece {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 }
+
+
