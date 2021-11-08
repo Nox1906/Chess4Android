@@ -51,8 +51,10 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
     )
     var puzzleInfo: PuzzleInfo?= null
     fun init() {
-        val dailyBoard : Array<Array<Pair<Army,Piece>>>
-        getPgnMatrix(puzzleInfo da)
+        val dailyBoard : Array<Array<Pair<Army,Piece>>>?= null
+        if (dailyBoard != null) {
+            getPgnMatrix(puzzleInfo, dailyBoard)
+        }
         Log.v("Daily board ", dailyBoard.toString())
         Log.v("TAG PuzzleInfo", puzzleInfo?.game?.pgn.toString())
         rowCount = side
@@ -82,7 +84,6 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         canvas.drawLine(width.toFloat(), 0f, width.toFloat(), height.toFloat(), brush)
     }
     fun getPgnMatrix(puzzleInfo: PuzzleInfo?, a: Array<Array<Pair<Army,Piece>>>) {
-
         a[0][0]= Pair(Army.BLACK,Piece.KNIGHT)
         a[1][2]= Pair(Army.WHITE,Piece.KING)
 
