@@ -48,13 +48,17 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         createImageEntry(Army.BLACK, Piece.QUEEN, R.drawable.ic_black_queen),
         createImageEntry(Army.BLACK, Piece.KING, R.drawable.ic_black_king),
     )
-    var puzzleInfo: PuzzleInfo?= null
-    private val dailyBoard = Array(side) { Array(side) { Any() } }
+
+    var puzzleInfo: PuzzleInfo? = null
+
+    private var dailyBoard = Array(side) {
+        Array(side) { Pair(Army.EMPTY, Piece.EMPTY) }
+    }
+
     fun init() {
         Log.v("TAG PuzzleInfo", puzzleInfo?.game?.pgn.toString())
         generateBoardMatrix(puzzleInfo, dailyBoard)
         Log.v("Daily board ", dailyBoard.contentDeepToString())
-
         rowCount = side
         columnCount = side
         repeat(side * side) {
@@ -62,10 +66,14 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
             val column = it % side
             val tile = Tile(
                 ctx,
-                if((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
+                if ((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
-                piecesImages
-            , Pair(Army.BLACK, Piece.PAWN)
+                piecesImages,
+                if (dailyBoard[row][column] != Pair(
+                        Army.EMPTY,
+                        Piece.EMPTY
+                    )
+                ) dailyBoard[row][column] else null
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)
@@ -81,32 +89,45 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         canvas.drawLine(0f, 0f, 0f, height.toFloat(), brush)
         canvas.drawLine(width.toFloat(), 0f, width.toFloat(), height.toFloat(), brush)
     }
-    private fun generateBoardMatrix(puzzleInfo: PuzzleInfo?, a: Array<Array<Any>>) {
+
+    private fun generateBoardMatrix(
+        puzzleInfo: PuzzleInfo?,
+        boardMatrix: Array<Array<Pair<Army, Piece>>>
+    ) {
         puzzleInfo?.game?.pgn?.split("\\s".toRegex())?.forEach { item ->
-            val pairPos=getBoardPosition(item)
-            a[pairPos.row][pairPos.col]= pairPos.pair
+            val piecePosition = getBoardPosition(item)
+            boardMatrix[piecePosition.row][piecePosition.col] = piecePosition.pair
         }
     }
-    data class PiecePosition(val row :Int, val col:Int, val pair: Pair<Army, Piece>)
 
-    private fun getBoardPosition(pgn: String) :PiecePosition{
-        if(pgn.length==2){
-            return PiecePosition((pgn[1].code- '0'.code)-1,Columns.valueOf(pgn[0].toString()
-                .uppercase(Locale.getDefault())).ordinal, Pair(Army.WHITE, Piece.PAWN))
-        }
-        else if(pgn.length==3){
-            return PiecePosition((pgn[2].code- '0'.code)-1,Columns.valueOf(pgn[1].toString()
-                .uppercase(Locale.getDefault())).ordinal, Pair(Army.WHITE,getPiece(pgn[0])))
+    data class PiecePosition(val row: Int, val col: Int, val pair: Pair<Army, Piece>)
+
+    private fun getBoardPosition(pgn: String): PiecePosition {
+        if (pgn.length == 2 && pgn != "O-O" && !pgn.contains('+')) {
+            return PiecePosition(
+                (pgn[1].code - '0'.code) - 1, Columns.valueOf(
+                    pgn[0].toString()
+                        .uppercase(Locale.getDefault())
+                ).ordinal, Pair(Army.WHITE, Piece.PAWN)
+            )
+        } else if (pgn.length == 3 && pgn != "O-O" && !pgn.contains('+')) {
+            return PiecePosition(
+                (pgn[2].code - '0'.code) - 1, Columns.valueOf(
+                    pgn[1].toString()
+                        .uppercase(Locale.getDefault())
+                ).ordinal, Pair(Army.WHITE, getPiece(pgn[0]))
+            )
         }
         //else if(pgn==4)
-        return PiecePosition(0,0,Pair(Army.BLACK, Piece.PAWN))
+        return PiecePosition(0, 0, Pair(Army.BLACK, Piece.PAWN))
     }
-    private fun getPiece(letter : Char): Piece{
-        if(letter=='B') return Piece.BISHOP
-        if(letter=='Q') return Piece.QUEEN
-        if(letter=='K') return Piece.KNIGHT
-        if(letter=='R') return Piece.ROOK
+
+    private fun getPiece(letter: Char): Piece {
+        if (letter == 'B') return Piece.BISHOP
+        if (letter == 'Q') return Piece.QUEEN
+        if (letter == 'K') return Piece.KNIGHT
+        return if (letter == 'R') Piece.ROOK
         //CORRIGIR PARA kING
-        else  return Piece.KING
+        else Piece.KING
     }
 }

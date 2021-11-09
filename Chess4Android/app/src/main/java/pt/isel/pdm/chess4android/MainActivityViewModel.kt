@@ -11,11 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivityViewModel : ViewModel() {
     enum class Army {
-        WHITE, BLACK
+        WHITE, BLACK, EMPTY
     }
 
     enum class Piece {
-        PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
+        PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING, EMPTY
     }
     enum class Columns{
         A,B,C,D,E,F,G,H
