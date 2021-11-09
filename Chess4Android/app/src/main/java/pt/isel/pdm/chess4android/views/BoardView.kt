@@ -12,6 +12,7 @@ import pt.isel.pdm.chess4android.MainActivityViewModel.*
 import pt.isel.pdm.chess4android.PuzzleInfo
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.views.Tile.Type
+import java.lang.Math.abs
 import java.util.*
 
 
@@ -69,11 +70,11 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
                 if ((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
                 piecesImages,
-                if (dailyBoard[row][column] != Pair(
+                if (dailyBoard[abs(row-(side-1))][column] != Pair(
                         Army.EMPTY,
                         Piece.EMPTY
                     )
-                ) dailyBoard[row][column] else null
+                ) dailyBoard[abs(row-(side-1))][column] else null
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)
@@ -95,6 +96,7 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         boardMatrix: Array<Array<Pair<Army, Piece>>>
     ) {
         puzzleInfo?.game?.pgn?.split("\\s".toRegex())?.forEach { item ->
+            if(item=="O-O") return //so para testar posicionamento correto das peças
             val piecePosition = getBoardPosition(item)
             boardMatrix[piecePosition.row][piecePosition.col] = piecePosition.pair
         }
@@ -103,14 +105,14 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
     data class PiecePosition(val row: Int, val col: Int, val pair: Pair<Army, Piece>)
 
     private fun getBoardPosition(pgn: String): PiecePosition {
-        if (pgn.length == 2 && pgn != "O-O" && !pgn.contains('+')) {
+        if (pgn.length == 2 && !pgn.contains('+')) {
             return PiecePosition(
                 (pgn[1].code - '0'.code) - 1, Columns.valueOf(
                     pgn[0].toString()
                         .uppercase(Locale.getDefault())
                 ).ordinal, Pair(Army.WHITE, Piece.PAWN)
             )
-        } else if (pgn.length == 3 && pgn != "O-O" && !pgn.contains('+')) {
+        } else if (pgn.length == 3 && !pgn.contains('+')) {
             return PiecePosition(
                 (pgn[2].code - '0'.code) - 1, Columns.valueOf(
                     pgn[1].toString()
@@ -125,9 +127,9 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
     private fun getPiece(letter: Char): Piece {
         if (letter == 'B') return Piece.BISHOP
         if (letter == 'Q') return Piece.QUEEN
-        if (letter == 'K') return Piece.KNIGHT
+        if (letter == 'K') return Piece.KING
+        if (letter == 'N') return Piece.KNIGHT
         return if (letter == 'R') Piece.ROOK
-        //CORRIGIR PARA kING
         else Piece.KING
     }
 }
