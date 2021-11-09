@@ -7,13 +7,12 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.GridLayout
-import androidx.lifecycle.MutableLiveData
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import pt.isel.pdm.chess4android.MainActivityViewModel
 import pt.isel.pdm.chess4android.MainActivityViewModel.*
 import pt.isel.pdm.chess4android.PuzzleInfo
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.views.Tile.Type
+import java.util.*
 
 
 typealias TileTouchListener = (tile: Tile, row: Int, column: Int) -> Unit
@@ -50,13 +49,12 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         createImageEntry(Army.BLACK, Piece.KING, R.drawable.ic_black_king),
     )
     var puzzleInfo: PuzzleInfo?= null
+    private val dailyBoard = Array(side) { Array(side) { Any() } }
     fun init() {
-        val dailyBoard : Array<Array<Pair<Army,Piece>>>?= null
-        if (dailyBoard != null) {
-            getPgnMatrix(puzzleInfo, dailyBoard)
-        }
-        Log.v("Daily board ", dailyBoard.toString())
         Log.v("TAG PuzzleInfo", puzzleInfo?.game?.pgn.toString())
+        generateBoardMatrix(puzzleInfo, dailyBoard)
+        Log.v("Daily board ", dailyBoard.contentDeepToString())
+
         rowCount = side
         columnCount = side
         repeat(side * side) {
@@ -67,7 +65,7 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
                 if((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
                 piecesImages
-            , Pair(Army.BLACK,Piece.BISHOP)
+            , Pair(Army.BLACK, Piece.PAWN)
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)
@@ -83,9 +81,32 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         canvas.drawLine(0f, 0f, 0f, height.toFloat(), brush)
         canvas.drawLine(width.toFloat(), 0f, width.toFloat(), height.toFloat(), brush)
     }
-    fun getPgnMatrix(puzzleInfo: PuzzleInfo?, a: Array<Array<Pair<Army,Piece>>>) {
-        a[0][0]= Pair(Army.BLACK,Piece.KNIGHT)
-        a[1][2]= Pair(Army.WHITE,Piece.KING)
+    private fun generateBoardMatrix(puzzleInfo: PuzzleInfo?, a: Array<Array<Any>>) {
+        puzzleInfo?.game?.pgn?.split("\\s".toRegex())?.forEach { item ->
+            val pairPos=getBoardPosition(item)
+            a[pairPos.row][pairPos.col]= pairPos.pair
+        }
+    }
+    data class PiecePosition(val row :Int, val col:Int, val pair: Pair<Army, Piece>)
 
+    private fun getBoardPosition(pgn: String) :PiecePosition{
+        if(pgn.length==2){
+            return PiecePosition((pgn[1].code- '0'.code)-1,Columns.valueOf(pgn[0].toString()
+                .uppercase(Locale.getDefault())).ordinal, Pair(Army.WHITE, Piece.PAWN))
+        }
+        else if(pgn.length==3){
+            return PiecePosition((pgn[2].code- '0'.code)-1,Columns.valueOf(pgn[1].toString()
+                .uppercase(Locale.getDefault())).ordinal, Pair(Army.WHITE,getPiece(pgn[0])))
+        }
+        //else if(pgn==4)
+        return PiecePosition(0,0,Pair(Army.BLACK, Piece.PAWN))
+    }
+    private fun getPiece(letter : Char): Piece{
+        if(letter=='B') return Piece.BISHOP
+        if(letter=='Q') return Piece.QUEEN
+        if(letter=='K') return Piece.KNIGHT
+        if(letter=='R') return Piece.ROOK
+        //CORRIGIR PARA kING
+        else  return Piece.KING
     }
 }

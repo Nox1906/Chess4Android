@@ -31,5 +31,6 @@ class MainActivity : AppCompatActivity() {
             //val randomPiece = Piece.values()[Random.nextInt(Piece.values().indices)]
             //tile.piece = Pair(randomArmy, randomPiece)
         }
+
     }
 }

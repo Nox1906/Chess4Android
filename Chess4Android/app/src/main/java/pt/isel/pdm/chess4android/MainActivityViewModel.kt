@@ -17,6 +17,9 @@ class MainActivityViewModel : ViewModel() {
     enum class Piece {
         PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
     }
+    enum class Columns{
+        A,B,C,D,E,F,G,H
+    }
     private val dailyPuzzleService: DailyPuzzleService = Retrofit.Builder()
         .baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -25,8 +28,6 @@ class MainActivityViewModel : ViewModel() {
 
         var puzzleInfo: MutableLiveData<PuzzleInfo> = MutableLiveData()
 
-
-    //var puzzleInfo: PuzzleInfo? =null;
     fun getDailyBoard() {
         dailyPuzzleService.getPuzzle().enqueue(object : Callback<PuzzleInfo> {
             override fun onResponse(call: Call<PuzzleInfo>, response: Response<PuzzleInfo>) {
