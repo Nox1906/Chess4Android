@@ -5,8 +5,11 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import pt.isel.pdm.chess4android.databinding.ActivityMainBinding
-import pt.isel.pdm.chess4android.views.BoardView
+import pt.isel.pdm.chess4android.MainActivityViewModel.*
 import pt.isel.pdm.chess4android.views.Tile
+import java.util.*
+import kotlin.random.Random.*
+import kotlin.random.Random.Default.nextInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,9 +30,9 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
-            //val randomArmy = Army.values()[Random.nextInt(Army.values().indices)]
-            //val randomPiece = Piece.values()[Random.nextInt(Piece.values().indices)]
-            //tile.piece = Pair(randomArmy, randomPiece)
+//            val randomArmy = Army.values()[Random.nextInt(Army.values().indices)]
+//            val randomPiece = Piece.values()[Random.nextInt(Piece.values().indices)]
+//            tile.piece = Pair(randomArmy, randomPiece)
         }
 
     }
