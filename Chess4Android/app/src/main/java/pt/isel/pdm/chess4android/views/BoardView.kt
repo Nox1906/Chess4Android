@@ -52,9 +52,9 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         createImageEntry(Army.BLACK, Piece.KING, R.drawable.ic_black_king),
     )
 
-    var dailyBoard:Array<Array<Pair<Army, Piece>>>?= null
 
-    fun init() {
+
+    fun displayBoard(dailyBoard:Array<Array<Pair<Army, Piece>>>) {
 
         Log.v("TAG PuzzleInfo", piecesImages.keys.toString())
         Log.v("Daily board ", dailyBoard.contentDeepToString())
@@ -68,11 +68,11 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
                 if ((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
                 piecesImages,
-                if (dailyBoard!![kotlin.math.abs(row - (side - 1))][column] != Pair(
+                if (dailyBoard[kotlin.math.abs(row - (side - 1))][column] != Pair(
                         Army.EMPTY,
                         Piece.EMPTY
                     )
-                ) dailyBoard!![kotlin.math.abs(row - (side - 1))][column] else null
+                ) dailyBoard[kotlin.math.abs(row - (side - 1))][column] else null
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)

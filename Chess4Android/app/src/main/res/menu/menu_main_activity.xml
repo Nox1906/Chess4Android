@@ -10,8 +10,4 @@
         android:id="@+id/solvePuzzle"
         android:title="Solve"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/dailyPuzzle"
-        android:title="Daily Puzzle"
-        app:showAsAction="always" />
 </menu>

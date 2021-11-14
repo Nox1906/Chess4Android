@@ -10,3 +10,4 @@ enum class Piece {
 enum class Columns{
     A,B,C,D,E,F,G,H
 }
+data class PieceAndItsPosition(val row: Int, val col: Int, val pair: Pair<Army, Piece>)

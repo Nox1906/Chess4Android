@@ -47,7 +47,7 @@ class MainActivityViewModel : ViewModel() {
         return dailyBoard
     }
 
-    data class PieceAndItsPosition(val row: Int, val col: Int, val pair: Pair<Army, Piece>)
+
 
     private fun getPieceAndItsPosition(pgn: String): PieceAndItsPosition {
         

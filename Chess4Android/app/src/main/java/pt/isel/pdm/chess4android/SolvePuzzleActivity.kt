@@ -1,13 +1,10 @@
 package pt.isel.pdm.chess4android
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import pt.isel.pdm.chess4android.databinding.ActivityMainBinding
 import pt.isel.pdm.chess4android.views.Tile
-import androidx.lifecycle.ViewModelProvider
-
-
 
 
 class SolvePuzzleActivity : MainActivity() {
@@ -15,29 +12,32 @@ class SolvePuzzleActivity : MainActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
+    private val solvePuzzleViewModel: SolvePuzzleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        val solvePuzzleViewModel= ViewModelProvider(this)[SolvePuzzleViewModel::class.java]
-        if(savedInstanceState== null){
+        //val solvePuzzleViewModel = ViewModelProvider(this)[SolvePuzzleViewModel::class.java]
+        if (solvePuzzleViewModel.board == null) {
             val bundle: Bundle? = intent.extras
-            solvePuzzleViewModel.getBoard(bundle?.get("board") as Array<Array<Pair<Army, Piece>>>?)
-        }else{
+            solvePuzzleViewModel.board =
+                bundle?.get("board") as Array<Array<Pair<Army, Piece>>>?
+            solvePuzzleViewModel.setBoardState()
+        }
+        solvePuzzleViewModel.getBoardState()?.let { binding.boardView.displayBoard(it) }
 
-        }
-        solvePuzzleViewModel.getBoard().observe(this){
-            binding.boardView.dailyBoard=it
-            binding.boardView.init()
-        }
-        solvePuzzleViewModel.getBoard()
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
             val randomArmy = Army.values()[1]
             val randomPiece = Piece.values()[1]
             tile.piece = Pair(randomArmy, randomPiece)
-            solvePuzzleViewModel.saveBoard(binding.boardView.dailyBoard)
+            val pieceAndItsPosition =
+                PieceAndItsPosition(row, column, Pair(randomArmy, randomPiece))
+            solvePuzzleViewModel.updateBoard(pieceAndItsPosition)
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_solve_puzzle_activity, menu)
+        return true
+
     }
 }
