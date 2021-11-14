@@ -5,6 +5,11 @@
       <map>
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/drawable/ic_black_bishop.xml" value="0.1" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_credits.xml" value="0.1" />
+        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle.xml" value="0.3392210144927536" />
+        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solve_puzzle.xml" value="0.1" />
+        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_main_activity.xml" value="0.22" />
       </map>
     </option>
   </component>

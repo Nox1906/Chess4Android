@@ -1,39 +1,62 @@
 package pt.isel.pdm.chess4android
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import pt.isel.pdm.chess4android.databinding.ActivityMainBinding
-import pt.isel.pdm.chess4android.MainActivityViewModel.*
 import pt.isel.pdm.chess4android.views.Tile
-import java.util.*
-import kotlin.random.Random.*
-import kotlin.random.Random.Default.nextInt
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val viewModel:MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getDailyBoard()
-
-        viewModel.puzzleInfo.observe(this){
-            binding.boardView.puzzleInfo=it
+        setContentView(binding.root)
+        viewModel.resultOfDailyPuzzleObserver.observe(this) {
+            viewModel.resultOfDailyPuzzle = it
+            viewModel.setDailyBoardMatrix()
+            binding.boardView.dailyBoard=viewModel.getDailyBoardMatrix()
             binding.boardView.init()
         }
-        setContentView(binding.root)
-        binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
-//            val randomArmy = Army.values()[Random.nextInt(Army.values().indices)]
-//            val randomPiece = Piece.values()[Random.nextInt(Piece.values().indices)]
-//            tile.piece = Pair(randomArmy, randomPiece)
-        }
+        viewModel.getDailyPuzzle()
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main_activity, menu)
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.credits) {
+            startActivity(Intent(this, CreditsActivity::class.java))
+            return true
+        }
+        if (item.itemId == R.id.dailyPuzzle) {
+            startActivity(Intent(this, MainActivity::class.java))
+            return true
+        }
+        if (item.itemId == R.id.solvePuzzle) {
+            intent = Intent(this, SolvePuzzleActivity::class.java)
+            intent.putExtra("board", viewModel.getDailyBoardMatrix())
+            startActivity(intent)
+            return true
+        } else {
+
+            super.onOptionsItemSelected(item)
+        }
+        return false
+    }
+
 }

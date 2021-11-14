@@ -46,6 +46,7 @@ dependencies {
     def lifecycle_version = "2.3.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha01"
     // Activity extensions
     implementation "androidx.activity:activity-ktx:1.3.1"
 
