@@ -1,6 +1,6 @@
 package pt.isel.pdm.chess4android.model.board
 
-import model.pieces.*
+import pt.isel.pdm.chess4android.model.pieces.*
 import pt.isel.pdm.chess4android.model.player.Player
 import pt.isel.pdm.chess4android.model.board.moves.AttackMove
 import pt.isel.pdm.chess4android.model.board.moves.CastlingMove

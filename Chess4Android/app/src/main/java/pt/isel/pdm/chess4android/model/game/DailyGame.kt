@@ -1,5 +1,7 @@
 package pt.isel.pdm.chess4android.model.game
 
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import pt.isel.pdm.chess4android.model.board.moves.AttackMove
 import pt.isel.pdm.chess4android.model.board.moves.CastlingMove
 import pt.isel.pdm.chess4android.model.board.moves.Move
@@ -9,24 +11,25 @@ import pt.isel.pdm.chess4android.model.player.Player
 /**
  * Class with daily chess puzzles!
  */
+@Parcelize
 class DailyGame(private val puzzleInfo: String, private val puzzleSolution: Array<String>) : Game() {
 
+    @IgnoredOnParcel
     private var moveCounter = 0
 
     /**
      * set pieces on board from a Portable Game Notation (PGN)
      */
-    override fun init() {
+    init {
         val pngCompiler = PngCompiler()
         pngCompiler.init()
         puzzleInfo.split("\\s".toRegex()).forEach { item ->
             val move: Move? = pngCompiler.getMove(item)
-            if (move == null) return
-            else {
+            if (move != null){
                 board.setDailyPositions(currentPlayer, move)
             }
             for (piece in board.getPieces(currentPlayer.isWhiteSide())) {
-                if (piece.getType() != move.type) continue
+                if (piece.getType() != move?.type) continue
                 move.setStart(board.getPiecePosition(piece))
                 if (!move.checkDisambiguating()) continue
                 if (makeMove(move)) break

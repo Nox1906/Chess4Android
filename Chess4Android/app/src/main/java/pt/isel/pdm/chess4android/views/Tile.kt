@@ -5,11 +5,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
-import pt.isel.pdm.chess4android.Army
-import pt.isel.pdm.chess4android.Piece
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import pt.isel.pdm.chess4android.MainActivityViewModel.*
+import pt.isel.pdm.chess4android.Game
+import pt.isel.pdm.chess4android.Puzzle
 import pt.isel.pdm.chess4android.R
+import pt.isel.pdm.chess4android.model.pieces.Piece
+import pt.isel.pdm.chess4android.model.pieces.Types
 
 /**
  * Custom view that implements a chess board tile.
@@ -25,20 +26,19 @@ import pt.isel.pdm.chess4android.R
 @SuppressLint("ViewConstructor")
 class Tile(
     private val ctx: Context,
-    private val type: Type,
     private val tilesPerSide: Int,
-    private val images: Map<Pair<Army, Piece>, VectorDrawableCompat?>,
-    initialPiece: Pair<Army, Piece>? = null,
+    private val images: Map<Pair<Types, Boolean>, VectorDrawableCompat?>,
+    private val type: Type,
+    var isSel: Boolean,
+    initialPiece: Piece? = null,
 ) : View(ctx) {
+    enum class Type { WHITE, BLACK }
 
-    var piece: Pair<Army, Piece>? = initialPiece
+    var piece: Piece? = initialPiece
         set(value) {
             field = value
             invalidate()
         }
-
-    enum class Type { WHITE, BLACK }
-
     private val brush = Paint().apply {
         color = ctx.resources.getColor(
             if (type == Type.WHITE) R.color.chess_board_white else R.color.chess_board_black,
@@ -55,14 +55,27 @@ class Tile(
         setMeasuredDimension(side / tilesPerSide, side / tilesPerSide)
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
+
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), brush)
-        if (piece != null) {
-            images[piece]?.apply {
+        if (!isSel) {
+            if (piece != null) {
+                images[Pair(piece!!.getType(), piece!!.isWhite())]?.apply {
+                    val padding = 8
+                    setBounds(padding, padding, width - padding, height - padding)
+                    draw(canvas)
+                }
+
+            }
+        } else {
+            VectorDrawableCompat.create(ctx.resources, R.drawable.maek, null)?.apply {
                 val padding = 8
-                setBounds(padding, padding, width-padding, height-padding)
+                setBounds(padding, padding, width - padding, height - padding)
                 draw(canvas)
             }
         }
     }
 }
+
+

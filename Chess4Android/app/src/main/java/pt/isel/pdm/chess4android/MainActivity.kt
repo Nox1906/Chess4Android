@@ -23,13 +23,13 @@ open class MainActivity : AppCompatActivity() {
 
         viewModel.resultOfDailyPuzzleObserver.observe(this) {
             viewModel.resultOfDailyPuzzle = it
-            viewModel.setDailyBoardMatrix()
-            binding.boardView.displayBoard(viewModel.getDailyBoardMatrix())
+            viewModel.setDailyGame()
+            binding.boardView.displayBoard(viewModel.getDailyGameBoard())
         }
         if(viewModel.resultOfDailyPuzzle==null){
             viewModel.getDailyPuzzle()
         }else{
-            binding.boardView.displayBoard(viewModel.getDailyBoardMatrix())
+            binding.boardView.displayBoard(viewModel.getDailyGameBoard())
         }
     }
 
@@ -46,7 +46,7 @@ open class MainActivity : AppCompatActivity() {
         }
         if (item.itemId == R.id.solvePuzzle) {
             intent = Intent(this, SolvePuzzleActivity::class.java)
-            intent.putExtra("board", viewModel.getDailyBoardMatrix())
+            intent.putExtra("dailyGame", viewModel.getDailyGame())
             startActivity(intent)
             return true
         } else {

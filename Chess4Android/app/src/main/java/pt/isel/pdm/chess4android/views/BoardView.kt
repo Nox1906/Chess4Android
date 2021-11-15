@@ -7,14 +7,10 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.GridLayout
-import androidx.lifecycle.ViewModel
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-
 import pt.isel.pdm.chess4android.R
-import pt.isel.pdm.chess4android.views.Tile.Type
-import pt.isel.pdm.chess4android.Army
-import pt.isel.pdm.chess4android.Piece
-import java.lang.Math.abs
+import pt.isel.pdm.chess4android.model.board.Position
+import pt.isel.pdm.chess4android.model.pieces.*
 import java.util.*
 
 
@@ -34,27 +30,27 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
         strokeWidth = 10F
     }
 
-    private fun createImageEntry(army: Army, piece: Piece, imageId: Int) =
-        Pair(Pair(army, piece), VectorDrawableCompat.create(ctx.resources, imageId, null))
+    private fun createImageEntry(pieceType: Types,isWhite: Boolean, imageId: Int) =
+        Pair(Pair(pieceType,isWhite), VectorDrawableCompat.create(ctx.resources, imageId, null))
 
     private val piecesImages = mapOf(
-        createImageEntry(Army.WHITE, Piece.PAWN, R.drawable.ic_white_pawn),
-        createImageEntry(Army.WHITE, Piece.KNIGHT, R.drawable.ic_white_knight),
-        createImageEntry(Army.WHITE, Piece.BISHOP, R.drawable.ic_white_bishop),
-        createImageEntry(Army.WHITE, Piece.ROOK, R.drawable.ic_white_rook),
-        createImageEntry(Army.WHITE, Piece.QUEEN, R.drawable.ic_white_queen),
-        createImageEntry(Army.WHITE, Piece.KING, R.drawable.ic_white_king),
-        createImageEntry(Army.BLACK, Piece.PAWN, R.drawable.ic_black_pawn),
-        createImageEntry(Army.BLACK, Piece.KNIGHT, R.drawable.ic_black_knight),
-        createImageEntry(Army.BLACK, Piece.BISHOP, R.drawable.ic_black_bishop),
-        createImageEntry(Army.BLACK, Piece.ROOK, R.drawable.ic_black_rook),
-        createImageEntry(Army.BLACK, Piece.QUEEN, R.drawable.ic_black_queen),
-        createImageEntry(Army.BLACK, Piece.KING, R.drawable.ic_black_king),
+        createImageEntry(Types.P,true, R.drawable.ic_white_pawn),
+        createImageEntry(Types.N,true ,R.drawable.ic_white_knight),
+        createImageEntry(Types.B,true, R.drawable.ic_white_bishop),
+        createImageEntry(Types.R,true, R.drawable.ic_white_rook),
+        createImageEntry(Types.Q,true, R.drawable.ic_white_queen),
+        createImageEntry(Types.K,true, R.drawable.ic_white_king),
+        createImageEntry(Types.P,false, R.drawable.ic_black_pawn),
+        createImageEntry(Types.N,false, R.drawable.ic_black_knight),
+        createImageEntry(Types.B,false, R.drawable.ic_black_bishop),
+        createImageEntry(Types.R,false, R.drawable.ic_black_rook),
+        createImageEntry(Types.Q,false, R.drawable.ic_black_queen),
+        createImageEntry(Types.K,false, R.drawable.ic_black_king),
     )
 
 
 
-    fun displayBoard(dailyBoard:Array<Array<Pair<Army, Piece>>>) {
+    fun displayBoard(dailyBoard:Array<Array<Position>>?) {
 
         Log.v("TAG PuzzleInfo", piecesImages.keys.toString())
         Log.v("Daily board ", dailyBoard.contentDeepToString())
@@ -65,22 +61,23 @@ class BoardView(private val ctx: Context, attrs: AttributeSet?) : GridLayout(ctx
             val column = it % side
             val tile = Tile(
                 ctx,
-                if ((row + column) % 2 == 0) Type.WHITE else Type.BLACK,
                 side,
                 piecesImages,
-                if (dailyBoard[kotlin.math.abs(row - (side - 1))][column] != Pair(
-                        Army.EMPTY,
-                        Piece.EMPTY
-                    )
-                ) dailyBoard[kotlin.math.abs(row - (side - 1))][column] else null
+                if((row + column) % 2 == 0) Tile.Type.WHITE else Tile.Type.BLACK,
+                false,
+                if (dailyBoard?.get(row)?.get(column)?.getPiece() !=null)
+                {
+                    dailyBoard[row][column].getPiece()
+                }
+                else null
             )
             tile.setOnClickListener { onTileClickedListener?.invoke(tile, row, column) }
             addView(tile)
+
         }
     }
 
     var onTileClickedListener: TileTouchListener? = null
-
     override fun dispatchDraw(canvas: Canvas) {
         super.dispatchDraw(canvas)
         canvas.drawLine(0f, 0f, width.toFloat(), 0f, brush)

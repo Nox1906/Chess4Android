@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdk 30
-
     defaultConfig {
         applicationId "pt.isel.pdm.chess4android"
         minSdk 26
