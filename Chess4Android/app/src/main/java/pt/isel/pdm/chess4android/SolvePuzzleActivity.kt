@@ -32,23 +32,28 @@ class SolvePuzzleActivity : MainActivity() {
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
 
             if (tile.piece != null && countTileTouch == 0) {
-                tile.isSel=true
+                tile.isSel = true
                 solvePuzzleViewModel.previousTile = PreviousTile(tile, row, column)
                 countTileTouch++
-            }
-            else if (tile.piece == null && solvePuzzleViewModel.previousTile!=null && countTileTouch==1
+            } else if (solvePuzzleViewModel.previousTile != null && countTileTouch == 1 &&
+                solvePuzzleViewModel.getDailyGame()?.playerMove(
+                    solvePuzzleViewModel.getDailyGame()!!.currentPlayer,
+                    solvePuzzleViewModel.previousTile!!.x,
+                    solvePuzzleViewModel.previousTile!!.y,
+                    column,
+                    row
+                ) == true
             ) {
-                tile.piece= solvePuzzleViewModel.previousTile?.tile?.piece
+                tile.piece = solvePuzzleViewModel.previousTile?.tile?.piece
 
-                countTileTouch=0
-                solvePuzzleViewModel.previousTile?.tile?.piece =null
-                solvePuzzleViewModel.previousTile?.tile?.isSel =false
-                solvePuzzleViewModel.previousTile=null
+                countTileTouch = 0
+                solvePuzzleViewModel.previousTile?.tile?.piece = null
+                solvePuzzleViewModel.previousTile?.tile?.isSel = false
+                solvePuzzleViewModel.previousTile = null
                 solvePuzzleViewModel.setDailyGameState()
 
-            }
-            else{
-                countTileTouch=0
+            } else {
+                countTileTouch = 0
             }
         }
     }
@@ -59,10 +64,4 @@ class SolvePuzzleActivity : MainActivity() {
 
     }
 }
-//&& solvePuzzleViewModel.getDailyGame()?.playerMove(
-//solvePuzzleViewModel.getDailyGame()!!.currentPlayer,
-//solvePuzzleViewModel.previousTile!!.x,
-//solvePuzzleViewModel.previousTile!!.y,
-//row,
-//column
-//) == true
+// == true

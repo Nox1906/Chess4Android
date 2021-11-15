@@ -27,7 +27,7 @@ class SolvePuzzleViewModel (private val state : SavedStateHandle) : ViewModel(){
     fun setDailyGame(dailyGame: DailyGame){
         this.dailyGame=dailyGame
     }
-    data class PreviousTile (val tile: Tile, val x:Int, val y :Int)
+    data class PreviousTile (val tile: Tile, val y:Int, val x :Int)
 
 
 
