@@ -12,12 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chess4Android">
-
         <activity
-            android:name=".SolvePuzzleActivity"
-            android:exported="false" />
+            android:name=".DailyPuzzleActivity"
+            android:exported="true" />
         <activity
-            android:name=".CreditsActivity"
+            android:name=".AboutActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

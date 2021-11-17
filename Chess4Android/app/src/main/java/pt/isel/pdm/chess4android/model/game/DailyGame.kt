@@ -87,4 +87,8 @@ class DailyGame(private val puzzleInfo: String, private val puzzleSolution: Arra
         }
         return true;
     }
+    fun getPuzzleSolution() : Array<String> {
+        return puzzleSolution
+    }
+
 }

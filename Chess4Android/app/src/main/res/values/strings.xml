@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Chess4Android</string>
+    <string name="title">Chess Royale</string>
+    <string name="fetch_puzzle_button">Daily Game</string>
+    <string name="about_button">About</string>
+    <string name="authors">Authors</string>
+    <string name="puzzle_from">Daily puzzle from:</string>
+    <string name="author1" translatable="false">Tiago Ribeiro</string>
+    <string name="author2" translatable="false">Diogo Fernandes</string>
+    <string name="source_api" translatable="false">Lichess.org API reference (2.0.0)</string>
 </resources>

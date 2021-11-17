@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chess4Android</string>
+    <string name="title">Xadrez</string>
+    <string name="fetch_puzzle_button">Puzzle do dia</string>
+    <string name="about_button">Sobre</string>
+    <string name="authors">Autores</string>
+    <string name="puzzle_from">Puzzle obtido de:</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chess4Android</string>
+    <string name="title">Chess Royale</string>
+    <string name="fetch_puzzle_button">Daily Game</string>
+    <string name="about_button">About</string>
+    <string name="authors">Authors</string>
+    <string name="puzzle_from">Daily Puzzle from:</string>
+</resources>

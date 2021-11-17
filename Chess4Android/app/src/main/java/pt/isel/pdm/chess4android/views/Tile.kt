@@ -3,8 +3,11 @@ package pt.isel.pdm.chess4android.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import pt.isel.pdm.chess4android.Game
 import pt.isel.pdm.chess4android.Puzzle
@@ -46,7 +49,10 @@ class Tile(
         )
         style = Paint.Style.FILL_AND_STROKE
     }
-
+    private val otherBrush = Paint().apply {
+        color = Color.CYAN
+    }
+    val circle= VectorDrawableCompat.create(ctx.resources, R.drawable.circle, null)
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val side = Integer.min(
             MeasureSpec.getSize(widthMeasureSpec),
@@ -60,6 +66,7 @@ class Tile(
 
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), brush)
         if (!isSel) {
+
             if (piece != null) {
                 images[Pair(piece!!.getType(), piece!!.isWhite())]?.apply {
                     val padding = 8
@@ -69,11 +76,17 @@ class Tile(
 
             }
         } else {
-            VectorDrawableCompat.create(ctx.resources, R.drawable.maek, null)?.apply {
+            circle?.apply {
+                val padding=1
+                setBounds(padding, padding, width - padding, height - padding)
+                draw(canvas)
+            }
+            images[Pair(piece!!.getType(), piece!!.isWhite())]?.apply {
                 val padding = 8
                 setBounds(padding, padding, width - padding, height - padding)
                 draw(canvas)
             }
+
         }
     }
 }
