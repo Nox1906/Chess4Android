@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Chess4Android">
         <activity
             android:name=".DailyPuzzleActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".AboutActivity"
             android:exported="false" />

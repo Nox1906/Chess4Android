@@ -6,4 +6,8 @@
     <string name="about_button">About</string>
     <string name="authors">Authors</string>
     <string name="puzzle_from">Daily Puzzle from:</string>
+    <string name="current_player_white">Next move: White</string>
+    <string name="current_player_black">Next move: Black</string>
+    <string name="solution_achieved">You\'ve achieved the puzzle solution</string>
+    <string name="wrong_turn">Not your turn</string>
 </resources>

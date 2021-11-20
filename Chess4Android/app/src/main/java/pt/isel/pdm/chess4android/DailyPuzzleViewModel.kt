@@ -13,7 +13,8 @@ import pt.isel.pdm.chess4android.views.Tile
 
 private const val ACTIVITY_VIEW_STATE = "Activity.ViewState"
 
-class MainActivityViewModel(private val state: SavedStateHandle) : ViewModel() {
+class DailyPuzzleViewModel(private val state: SavedStateHandle) : ViewModel() {
+
     private val dailyPuzzleService: DailyPuzzleService = Retrofit.Builder()
         .baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -70,6 +71,11 @@ class MainActivityViewModel(private val state: SavedStateHandle) : ViewModel() {
             column,
             row
         )
+    }
+
+
+    fun isWhitePlayer(): Boolean {
+        return getDailyGame()!!.currentPlayer.isWhiteSide()
     }
 
 }

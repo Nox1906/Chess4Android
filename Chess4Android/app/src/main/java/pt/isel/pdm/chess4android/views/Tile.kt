@@ -52,7 +52,7 @@ class Tile(
     private val otherBrush = Paint().apply {
         color = Color.CYAN
     }
-    val circle= VectorDrawableCompat.create(ctx.resources, R.drawable.circle, null)
+    private val circle= VectorDrawableCompat.create(ctx.resources, R.drawable.circle, null)
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val side = Integer.min(
             MeasureSpec.getSize(widthMeasureSpec),

@@ -6,4 +6,8 @@
     <string name="about_button">Sobre</string>
     <string name="authors">Autores</string>
     <string name="puzzle_from">Puzzle obtido de:</string>
+    <string name="current_player_white">Próximo movimento: Branco</string>
+    <string name="current_player_black">Próximo movimento: Preto</string>
+    <string name="solution_achieved">Alcançou a solução do puzzle</string>
+    <string name="wrong_turn">Não é a tua vez</string>
 </resources>
