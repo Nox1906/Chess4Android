@@ -24,8 +24,8 @@ class Pawn(white: Boolean) : Piece(white) {
         val x = end.getX() - start.getX()
 
         //Regular move
-        if (abs(y) == 1) {
-            if (x == 0)
+        if (y == 1 && !isWhite() || y == -1 && isWhite()) {
+                if (x == 0)
                 return true
             //Attacking Move
             else if (abs(x) == 1 && end.getPiece() != null) {
