@@ -10,4 +10,7 @@
     <string name="current_player_black">Próximo movimento: Preto</string>
     <string name="solution_achieved">Alcançou a solução do puzzle</string>
     <string name="wrong_turn">Não é a tua vez</string>
+    <string name="history_button">Histórico</string>
+    <string name="textView_isSolved">Resolvido</string>
+    <string name="textView_notSolved">Não resolvido</string>
 </resources>

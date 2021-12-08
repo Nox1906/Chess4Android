@@ -12,18 +12,19 @@ import pt.isel.pdm.chess4android.model.player.Player
  * Class with daily chess puzzles!
  */
 @Parcelize
-class DailyGame(private val puzzleInfo: String, private val puzzleSolution: Array<String>) : Game() {
+class DailyGame(private val puzzleId : String, private val puzzlePgn: String, private val puzzleSolution: Array<String>) : Game() {
 
     @IgnoredOnParcel
     private var moveCounter = 0
-
+    @IgnoredOnParcel
+    private var status = false
     /**
      * set pieces on board from a Portable Game Notation (PGN)
      */
     init {
         val pngCompiler = PngCompiler()
         pngCompiler.init()
-        puzzleInfo.split("\\s".toRegex()).forEach { item ->
+        puzzlePgn.split("\\s".toRegex()).forEach { item ->
             val move: Move? = pngCompiler.getMove(item)
             if (move != null){
                 board.setDailyPositions(currentPlayer, move)
@@ -85,10 +86,16 @@ class DailyGame(private val puzzleInfo: String, private val puzzleSolution: Arra
         } else {
             this.currentPlayer = players[0];
         }
-        return true;
+        return true
     }
-    fun getPuzzleSolution() : Array<String> {
-        return puzzleSolution
+    fun getPuzzleSolution() : Array<String> = this.puzzleSolution
+
+    fun setDailyGameStatus(status : Boolean){
+        this.status=status
     }
+    fun getDailyGameStatus() : Boolean = this.status
+    fun getPuzzleId() : String = this.puzzleId
+
+
 
 }

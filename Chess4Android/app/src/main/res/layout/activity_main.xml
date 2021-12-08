@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.main_activity.MainActivity">
 
     <Button
         android:id="@+id/fetch_puzzle_button"
@@ -27,17 +27,16 @@
         style="@android:style/Widget.Button"
         android:layout_width="217dp"
         android:layout_height="56dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#9C8BC34A"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/about_button"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#050505"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fetch_puzzle_button"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/historyButton" />
 
     <ImageView
         android:id="@+id/pieces_img"
@@ -65,4 +64,19 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pieces_img" />
+
+    <Button
+        android:id="@+id/historyButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="217dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#9C84BA46"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/history_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fetch_puzzle_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

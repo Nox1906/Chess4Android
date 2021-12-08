@@ -1,4 +1,4 @@
-package pt.isel.pdm.chess4android
+package pt.isel.pdm.chess4android.activities.daily_puzzle
 
 import retrofit2.Call
 import retrofit2.http.GET

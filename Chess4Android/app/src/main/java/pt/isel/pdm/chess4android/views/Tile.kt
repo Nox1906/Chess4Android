@@ -9,8 +9,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import pt.isel.pdm.chess4android.Game
-import pt.isel.pdm.chess4android.Puzzle
+import pt.isel.pdm.chess4android.activities.daily_puzzle.*
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.model.pieces.Piece
 import pt.isel.pdm.chess4android.model.pieces.Types

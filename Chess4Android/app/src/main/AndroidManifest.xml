@@ -13,13 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chess4Android">
         <activity
-            android:name=".DailyPuzzleActivity"
+            android:name=".activities.history.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".activities.daily_puzzle.DailyPuzzleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.main_activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

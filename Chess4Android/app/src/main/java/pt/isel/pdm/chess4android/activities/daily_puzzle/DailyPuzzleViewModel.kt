@@ -1,4 +1,4 @@
-package pt.isel.pdm.chess4android
+package pt.isel.pdm.chess4android.activities.daily_puzzle
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
@@ -38,9 +38,9 @@ class DailyPuzzleViewModel(private val state: SavedStateHandle) : ViewModel() {
                 resultOfDailyPuzzle = response.body()
                 val dailyGame = resultOfDailyPuzzle?.puzzle?.solution?.let {
                     DailyGame(
+                        resultOfDailyPuzzle!!.game.id,
                         resultOfDailyPuzzle!!.game.pgn,
-                        it
-                    )
+                        it)
                 }
                 state.set(ACTIVITY_VIEW_STATE, dailyGame)
             }
@@ -71,6 +71,10 @@ class DailyPuzzleViewModel(private val state: SavedStateHandle) : ViewModel() {
             column,
             row
         )
+    }
+
+    fun setIsSolved() {
+        getDailyGame()?.setDailyGameStatus(true)
     }
 
 

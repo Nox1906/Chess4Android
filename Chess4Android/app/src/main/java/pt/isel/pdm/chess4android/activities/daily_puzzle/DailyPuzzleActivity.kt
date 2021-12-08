@@ -1,12 +1,13 @@
-package pt.isel.pdm.chess4android
+package pt.isel.pdm.chess4android.activities.daily_puzzle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import pt.isel.pdm.chess4android.activities.daily_puzzle.DailyPuzzleViewModel.*
 import pt.isel.pdm.chess4android.databinding.ActivityDailyPuzzleBinding
 import pt.isel.pdm.chess4android.views.Tile
-import pt.isel.pdm.chess4android.DailyPuzzleViewModel.*
+import pt.isel.pdm.chess4android.R
 
 
 class DailyPuzzleActivity : AppCompatActivity() {
@@ -72,6 +73,7 @@ class DailyPuzzleActivity : AppCompatActivity() {
                         tile.isSel = false
                     }
                 } else {
+                    viewModel.setIsSolved()
                     Toast.makeText(this, R.string.solution_achieved, Toast.LENGTH_LONG).show()
                 }
             }
@@ -85,6 +87,7 @@ class DailyPuzzleActivity : AppCompatActivity() {
                 binding.currentPlayerView.text= getString(R.string.current_player_black)
         }
         else{
+            viewModel.setIsSolved()
             binding.currentPlayerView.text= getString(R.string.solution_achieved)
         }
     }

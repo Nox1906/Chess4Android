@@ -10,4 +10,7 @@
     <string name="current_player_black">Next move: Black</string>
     <string name="solution_achieved">You\'ve achieved the puzzle solution</string>
     <string name="wrong_turn">Not your turn</string>
+    <string name="history_button">History</string>
+    <string name="textView_isSolved">Solved</string>
+    <string name="textView_notSolved">Not solved</string>
 </resources>
