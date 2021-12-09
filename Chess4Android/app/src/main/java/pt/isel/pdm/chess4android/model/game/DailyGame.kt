@@ -12,12 +12,9 @@ import pt.isel.pdm.chess4android.model.player.Player
  * Class with daily chess puzzles!
  */
 @Parcelize
-class DailyGame(private val puzzleId : String, private val puzzlePgn: String, private val puzzleSolution: Array<String>) : Game() {
+class DailyGame(private val puzzleId : String, private val puzzlePgn: String, private val puzzleSolution: MutableList<String>) : Game() {
 
-    @IgnoredOnParcel
-    private var moveCounter = 0
-    @IgnoredOnParcel
-    private var status = false
+
     /**
      * set pieces on board from a Portable Game Notation (PGN)
      */
@@ -46,10 +43,9 @@ class DailyGame(private val puzzleId : String, private val puzzlePgn: String, pr
     override fun playerMove(player: Player, startX: Int, startY: Int, endX: Int, endY: Int): Boolean {
         if (player.isWhiteSide() != currentPlayer.isWhiteSide()) return false
         val move = board.getPossibleMove(player, startX, startY, endX, endY) ?: return false
-        if (move.getStart()?.getPng() + move.getEnd()?.getPng() != puzzleSolution[moveCounter]) {
+        if (move.getStart()?.getPng() + move.getEnd()?.getPng() != puzzleSolution[0]) {
             return false
         }
-        moveCounter++
         return this.makeMove(move)
     }
 
@@ -88,13 +84,16 @@ class DailyGame(private val puzzleId : String, private val puzzlePgn: String, pr
         }
         return true
     }
-    fun getPuzzleSolution() : Array<String> = this.puzzleSolution
+    fun getPuzzleSolution() : MutableList<String> = this.puzzleSolution
 
-    fun setDailyGameStatus(status : Boolean){
-        this.status=status
+    fun getDailyGameStatus() : Boolean{
+        return puzzleSolution.isEmpty()
     }
-    fun getDailyGameStatus() : Boolean = this.status
     fun getPuzzleId() : String = this.puzzleId
+
+    fun removeSolutionMove(){
+        puzzleSolution.removeAt(0)
+    }
 
 
 

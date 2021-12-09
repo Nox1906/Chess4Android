@@ -1,4 +1,4 @@
-package pt.isel.pdm.chess4android.activities.daily_puzzle
+package pt.isel.pdm.chess4android.common
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -13,7 +13,7 @@ data class Game(
     )
 data class Puzzle(
     val id: String,
-    val solution: Array<String>)
+    val solution: ArrayList<String>)
 
 interface DailyPuzzleService {
     @GET("puzzle/daily")

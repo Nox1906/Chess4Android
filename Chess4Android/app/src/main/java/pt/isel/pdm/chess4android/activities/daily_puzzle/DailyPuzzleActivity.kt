@@ -29,10 +29,10 @@ class DailyPuzzleActivity : AppCompatActivity() {
         }
 
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
-            if (tile.piece?.isWhite() != viewModel.isWhitePlayer() && !viewModel.onMove && !viewModel.solutionIsDone()) {
+            if (tile.piece?.isWhite() != viewModel.isWhitePlayer() && !viewModel.onMove && !viewModel.solutionIsDone()!!) {
                 Toast.makeText(this, R.string.wrong_turn, Toast.LENGTH_LONG).show()
             } else {
-                if (!viewModel.solutionIsDone()) {
+                if (!viewModel.solutionIsDone()!!) {
                     if (tile.piece != null && !viewModel.onMove) {
                         tile.isSel = true
                         tile.invalidate()
@@ -49,7 +49,7 @@ class DailyPuzzleActivity : AppCompatActivity() {
                         viewModel.previousTile?.tile?.piece = null
                         viewModel.previousTile?.tile?.isSel = false
                         viewModel.previousTile = null
-                        viewModel.countMoves++
+                        viewModel.removeSolutionMove()
                         displayCurrentPlayer()
                     } else if (viewModel.onMove && tile.piece != null) {
                         viewModel.onMove = false
@@ -73,21 +73,20 @@ class DailyPuzzleActivity : AppCompatActivity() {
                         tile.isSel = false
                     }
                 } else {
-                    viewModel.setIsSolved()
+
                     Toast.makeText(this, R.string.solution_achieved, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
     private fun displayCurrentPlayer(){
-        if (!viewModel.solutionIsDone()){
+        if (!viewModel.solutionIsDone()!!){
             if(viewModel.isWhitePlayer())
                 binding.currentPlayerView.text= getString(R.string.current_player_white)
             else
                 binding.currentPlayerView.text= getString(R.string.current_player_black)
         }
         else{
-            viewModel.setIsSolved()
             binding.currentPlayerView.text= getString(R.string.solution_achieved)
         }
     }
