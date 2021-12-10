@@ -8,24 +8,32 @@ import pt.isel.pdm.chess4android.activities.daily_puzzle.DailyPuzzleViewModel.*
 import pt.isel.pdm.chess4android.databinding.ActivityDailyPuzzleBinding
 import pt.isel.pdm.chess4android.views.Tile
 import pt.isel.pdm.chess4android.R
+import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
+private const val PUZZLE_EXTRA = "DailyPuzzleActivity.Extra.DailyGame"
 
 class DailyPuzzleActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityDailyPuzzleBinding.inflate(layoutInflater)
     }
+
     private val viewModel: DailyPuzzleViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        viewModel.dailyGame.observe(this) {
+        val puzzle = intent.getParcelableExtra<DailyPuzzle>(PUZZLE_EXTRA)
+        viewModel.dailyPuzzle.observe(this) {
             binding.boardView.displayBoard(it.board.getBoardPositions())
             displayCurrentPlayer()
         }
-        if (viewModel.dailyGameNotFetched()) {
-            viewModel.getDailyPuzzle()
+        if (puzzle == null) {
+            if (viewModel.dailyGameNotFetched())
+                viewModel.getDailyPuzzle()
+
+        }else{
+            viewModel.setDailyGame(puzzle)
         }
 
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
@@ -79,15 +87,15 @@ class DailyPuzzleActivity : AppCompatActivity() {
             }
         }
     }
-    private fun displayCurrentPlayer(){
-        if (!viewModel.solutionIsDone()!!){
-            if(viewModel.isWhitePlayer())
-                binding.currentPlayerView.text= getString(R.string.current_player_white)
+
+    private fun displayCurrentPlayer() {
+        if (!viewModel.solutionIsDone()!!) {
+            if (viewModel.isWhitePlayer())
+                binding.currentPlayerView.text = getString(R.string.current_player_white)
             else
-                binding.currentPlayerView.text= getString(R.string.current_player_black)
-        }
-        else{
-            binding.currentPlayerView.text= getString(R.string.solution_achieved)
+                binding.currentPlayerView.text = getString(R.string.current_player_black)
+        } else {
+            binding.currentPlayerView.text = getString(R.string.solution_achieved)
         }
     }
 }

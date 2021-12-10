@@ -6,6 +6,7 @@ import pt.isel.pdm.chess4android.model.board.moves.Move
 import pt.isel.pdm.chess4android.model.player.AwayPlayer
 import pt.isel.pdm.chess4android.model.player.HomePlayer
 import pt.isel.pdm.chess4android.model.player.Player
+import java.io.File.separator
 import java.util.*
 
 /**
@@ -23,4 +24,9 @@ abstract class Game : Parcelable{
     abstract fun playerMove(player: Player, startX: Int, startY: Int, endX: Int, endY: Int): Boolean
 
     protected abstract fun makeMove(move: Move): Boolean
+
+    fun getMovesPlayedAsPgn() : String {
+
+        return movesPlayed.joinToString(separator = " ") { it.png }
+    }
 }

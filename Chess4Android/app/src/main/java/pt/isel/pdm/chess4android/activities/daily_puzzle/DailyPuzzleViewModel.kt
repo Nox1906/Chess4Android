@@ -4,13 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import pt.isel.pdm.chess4android.model.game.DailyGame
+import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import pt.isel.pdm.chess4android.views.Tile
 import pt.isel.pdm.chess4android.common.*
 
@@ -20,48 +17,39 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
     AndroidViewModel(application) {
 
 
-    val dailyGame: LiveData<DailyGame> = state.getLiveData(ACTIVITY_VIEW_STATE)
+    val dailyPuzzle: LiveData<DailyPuzzle> = state.getLiveData(ACTIVITY_VIEW_STATE)
 
     data class PreviousTile(val tile: Tile, val y: Int, val x: Int)
 
     var onMove: Boolean = false
     var previousTile: PreviousTile? = null
-    var resultOfDailyPuzzle: ResultOfDailyPuzzle? = null
+    //var resultOfDailyPuzzle: ResultOfDailyPuzzle? = null
 
     fun getDailyPuzzle() {
-        getApplication<DailyGameChessApplication>().dailyPuzzleService.getPuzzle()
-            .enqueue(object : Callback<ResultOfDailyPuzzle> {
-                override fun onResponse(
-                    call: Call<ResultOfDailyPuzzle>,
-                    response: Response<ResultOfDailyPuzzle>
-                ) {
-                    resultOfDailyPuzzle = response.body()
-                    val dailyGame = resultOfDailyPuzzle?.puzzle?.solution?.let {
-                        DailyGame(
-                            resultOfDailyPuzzle!!.game.id,
-                            resultOfDailyPuzzle!!.game.pgn,
-                            it
-                        )
-                    }
-                    state.set(ACTIVITY_VIEW_STATE, dailyGame)
-                }
-
-                override fun onFailure(call: Call<ResultOfDailyPuzzle>, t: Throwable) {
-
-                }
+        getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.fetchDailyPuzzle(
+            "adsd",
+            true,
+            callback = { res ->
+                res.onSuccess { state.set(ACTIVITY_VIEW_STATE, it) }
+                res.onFailure { state.set(ACTIVITY_VIEW_STATE, null) }
             })
     }
 
-    private fun getDailyGame(): DailyGame? {
-        return dailyGame.value
+
+    private fun getDailyGame(): DailyPuzzle? {
+        return dailyPuzzle.value
     }
 
     fun dailyGameNotFetched(): Boolean {
-        return dailyGame.value == null
+        return dailyPuzzle.value == null
     }
 
     fun solutionIsDone(): Boolean? {
-        return dailyGame.value?.getDailyGameStatus()
+        return dailyPuzzle.value?.getDailyGameStatus()
+    }
+
+    fun setDailyGame(dailyPuzzle: DailyPuzzle) {
+        state.set(ACTIVITY_VIEW_STATE, dailyPuzzle)
     }
 
     fun canMove(column: Int, row: Int): Boolean? {
@@ -75,7 +63,7 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
     }
 
     fun removeSolutionMove() {
-        dailyGame.value?.removeSolutionMove()
+        dailyPuzzle.value?.removeSolutionMove()
     }
 
 
