@@ -20,7 +20,7 @@ class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindTo(dailyPuzzle: DailyPuzzle, resources: Resources, onItemCLick: () -> Unit) {
         puzzleId.text = dailyPuzzle.getPuzzleId()
         isSolved.text =
-            if (dailyPuzzle.getPuzzleSolution()[0] =="") resources.getString(R.string.textView_isSolved) else resources.getString(
+            if (dailyPuzzle.getPuzzleSolution()[0] == "") resources.getString(R.string.textView_isSolved) else resources.getString(
                 R.string.textView_notSolved
             )
         itemView.setOnClickListener {

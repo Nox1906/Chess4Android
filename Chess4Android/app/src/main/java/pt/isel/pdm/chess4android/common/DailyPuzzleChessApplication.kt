@@ -19,7 +19,7 @@ class DailyPuzzleChessApplication : Application() {
             .create(DailyPuzzleService::class.java)
     }
     val dailyPuzzleHistoryDB by lazy {
-        Room.inMemoryDatabaseBuilder(this, PuzzleHistoryDataBase::class.java).build()
+        Room.databaseBuilder(this, PuzzleHistoryDataBase::class.java, "chessDB").build()
         //change to databaseBuilder()
     }
     val dailyPuzzleChessRepository by lazy {

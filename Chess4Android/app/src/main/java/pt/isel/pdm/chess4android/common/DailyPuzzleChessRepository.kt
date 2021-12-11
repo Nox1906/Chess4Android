@@ -25,6 +25,14 @@ class DailyPuzzleChessRepository(
             puzzleEntity
         }
     }
+    fun asyncGetPuzzleByIdFromDB(id: String,
+        callback: (Result<PuzzleEntity?>) -> Unit
+    ) {
+        callbackAfterAsync(callback) {
+            val puzzleEntity = historyDao.getById(id)
+            puzzleEntity
+        }
+    }
 
     /**
      * Asynchronously gets the daily quote from the remote API.

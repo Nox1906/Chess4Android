@@ -15,6 +15,7 @@ import pt.isel.pdm.chess4android.model.player.Player
 class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, private var puzzleSolution: MutableList<String>) : Game() {
 
 
+
     /**
      * set pieces on board from a Portable Game Notation (PGN)
      */
@@ -96,11 +97,15 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
     }
     fun getPgn(): String = this.puzzlePgn
 
-    fun setPgn(pgn : String){
-        this.puzzlePgn= pgn
+    fun setPgn(pgn : String?){
+        if (pgn != null) {
+            this.puzzlePgn= pgn
+        }
     }
-    fun setSolution(solution : MutableList<String>){
-        this.puzzleSolution= solution
+    fun setSolution(solution : MutableList<String>?){
+        if (solution != null) {
+            this.puzzleSolution= solution
+        }
     }
 
 

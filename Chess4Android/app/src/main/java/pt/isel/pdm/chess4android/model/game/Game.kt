@@ -13,8 +13,8 @@ import java.util.*
  * Abstract class of all games*/
 
 abstract class Game : Parcelable {
-    var originalSolution: MutableList<String>? = null
-    var originalPgn: String? = null
+//    var originalSolution: MutableList<String>? = null
+//    var originalPgn: String? = null
     protected var movesPlayed: LinkedList<Move> = LinkedList()
     var board: Board = Board()
     protected var players: Array<Player> =

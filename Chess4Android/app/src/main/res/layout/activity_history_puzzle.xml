@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.history.SolvedDailyPuzzleActivity">
+    tools:context=".activities.history.HistoryPuzzleActivity">
 
     <pt.isel.pdm.chess4android.views.BoardView
         android:id="@+id/boardView"
@@ -24,6 +24,11 @@
         android:id="@+id/solve_puzzle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0E0E0D"
+        android:textStyle="bold"
         android:text="Solve Puzzle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/see_solution_button"
@@ -37,6 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0E0E0D"
+        android:textStyle="bold"
         android:text="See Solution"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

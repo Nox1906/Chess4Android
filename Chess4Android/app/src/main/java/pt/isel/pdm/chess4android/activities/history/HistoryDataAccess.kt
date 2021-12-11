@@ -41,8 +41,8 @@ interface PuzzleHistoryDao {
     @Query("SELECT * FROM history_puzzle ORDER BY id DESC LIMIT 100")
     fun getAll(): List<PuzzleEntity>
 
-//    @Query("SELECT * FROM history_puzzle WHERE id = :id")
-//    fun getById(id: String): PuzzleEntity
+    @Query("SELECT * FROM history_puzzle WHERE id = :id")
+    fun getById(id: String): PuzzleEntity
 
     @Query("SELECT * FROM history_puzzle ORDER BY timestamp DESC LIMIT :count")
     fun getLast(count: Int): List<PuzzleEntity>

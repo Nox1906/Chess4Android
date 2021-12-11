@@ -1,12 +1,20 @@
 package pt.isel.pdm.chess4android.activities.history
 
 import android.app.Application
+import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.parcelize.Parcelize
 import pt.isel.pdm.chess4android.common.DailyPuzzleChessApplication
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import pt.isel.pdm.chess4android.common.*
+
+@Parcelize
+data class OriginalDailyPuzzle(
+    var originalPuzzlePgn: String,
+    var originalPuzzleSolution: MutableList<String>
+) : Parcelable
 
 class HistoryViewModel(application: Application) :
     AndroidViewModel(application) {
@@ -15,6 +23,7 @@ class HistoryViewModel(application: Application) :
     private val puzzleHistoryDao: PuzzleHistoryDao by lazy {
         getApplication<DailyPuzzleChessApplication>().dailyPuzzleHistoryDB.getHistoryDataBase()
     }
+    var originalDailyPuzzle: OriginalDailyPuzzle? = null
 
     fun loadHistory(): LiveData<List<DailyPuzzle>> {
         val result = MutableLiveData<List<DailyPuzzle>>()
@@ -27,8 +36,10 @@ class HistoryViewModel(application: Application) :
                         puzzlePgn = it.pgn,
                         puzzleSolution = it.solution.split(",").toMutableList()
                     )
-                    d.originalPgn= it.originalPgn
-                    d.originalSolution= it.originalSolution.split(",").toMutableList()
+                    originalDailyPuzzle = OriginalDailyPuzzle(
+                        it.originalPgn,
+                        it.originalSolution.split(",").toMutableList()
+                    )
                     d
                 }
             },
@@ -39,19 +50,4 @@ class HistoryViewModel(application: Application) :
         )
         return result
     }
-
-
-
-//    private fun puzzleEntityToDailyGame(puzzleEntityList: List<PuzzleEntity>): List<DailyGame> {
-//        return puzzleEntityList.map { createDailyGame(it) }
-//    }
-//
-//    private fun createDailyGame(p: PuzzleEntity): DailyGame {
-//
-//        val dg = DailyGame(p.id, p.pgn, p.solution.split(",").toMutableList())
-//        dg.board = p.board
-//        return dg
-//    }
-
-
 }
