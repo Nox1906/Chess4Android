@@ -12,7 +12,7 @@ import pt.isel.pdm.chess4android.model.player.Player
  * Class with daily chess puzzles!
  */
 @Parcelize
-class DailyPuzzle(private val puzzleId : String, private val puzzlePgn: String, private val puzzleSolution: MutableList<String>) : Game() {
+class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, private var puzzleSolution: MutableList<String>) : Game() {
 
 
     /**
@@ -93,6 +93,14 @@ class DailyPuzzle(private val puzzleId : String, private val puzzlePgn: String, 
 
     fun removeSolutionMove(){
         puzzleSolution.removeAt(0)
+    }
+    fun getPgn(): String = this.puzzlePgn
+
+    fun setPgn(pgn : String){
+        this.puzzlePgn= pgn
+    }
+    fun setSolution(solution : MutableList<String>){
+        this.puzzleSolution= solution
     }
 
 

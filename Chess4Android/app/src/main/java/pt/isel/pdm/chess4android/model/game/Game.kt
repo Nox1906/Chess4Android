@@ -12,11 +12,13 @@ import java.util.*
 /**
  * Abstract class of all games*/
 
-abstract class Game : Parcelable{
-
+abstract class Game : Parcelable {
+    var originalSolution: MutableList<String>? = null
+    var originalPgn: String? = null
     protected var movesPlayed: LinkedList<Move> = LinkedList()
     var board: Board = Board()
-    protected var players: Array<Player> = arrayOf(HomePlayer(whiteSide = true), AwayPlayer(whiteSide = false))
+    protected var players: Array<Player> =
+        arrayOf(HomePlayer(whiteSide = true), AwayPlayer(whiteSide = false))
     var currentPlayer: Player = players[0]
 
     //abstract fun init()
@@ -25,8 +27,8 @@ abstract class Game : Parcelable{
 
     protected abstract fun makeMove(move: Move): Boolean
 
-    fun getMovesPlayedAsPgn() : String {
+    fun getMovesPlayedAsPgn(): String {
 
-        return movesPlayed.joinToString(separator = " ") { it.png }
+        return movesPlayed.joinToString(separator = " ")
     }
 }

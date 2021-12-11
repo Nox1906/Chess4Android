@@ -4,12 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import pt.isel.pdm.chess4android.common.DailyPuzzleChessApplication
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import pt.isel.pdm.chess4android.common.*
 
-class HistoryViewModel(application: Application, private val state: SavedStateHandle) :
+class HistoryViewModel(application: Application) :
     AndroidViewModel(application) {
     var puzzleHistory: LiveData<List<DailyPuzzle>>? = null
         private set
@@ -23,11 +22,14 @@ class HistoryViewModel(application: Application, private val state: SavedStateHa
         callbackAfterAsync(
             asyncAction = {
                 puzzleHistoryDao.getAll().map {
-                    DailyPuzzle(
+                    val d = DailyPuzzle(
                         puzzleId = it.id,
                         puzzlePgn = it.pgn,
                         puzzleSolution = it.solution.split(",").toMutableList()
                     )
+                    d.originalPgn= it.originalPgn
+                    d.originalSolution= it.originalSolution.split(",").toMutableList()
+                    d
                 }
             },
             callback = { res ->

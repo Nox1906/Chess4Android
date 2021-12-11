@@ -5,6 +5,7 @@ import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class DailyPuzzleChessRepository(
     private val dailyPuzzleService: DailyPuzzleService,
@@ -17,11 +18,10 @@ class DailyPuzzleChessRepository(
      * asynchronous operation, which is called in the MAIN THREAD.
      */
     private fun asyncMaybeGetTodayPuzzleFromDB(
-        id: String,
         callback: (Result<PuzzleEntity?>) -> Unit
     ) {
         callbackAfterAsync(callback) {
-            val puzzleEntity = historyDao.getById(id)
+            val puzzleEntity = historyDao.getLast(1).firstOrNull()
             puzzleEntity
         }
     }
@@ -68,9 +68,21 @@ class DailyPuzzleChessRepository(
             historyDao.insert(
                 PuzzleEntity(
                     id = puzzle.getPuzzleId(),
-                    pgn = puzzle.getMovesPlayedAsPgn(),
-                    solution = puzzle.getPuzzleSolution().joinToString(separator = ",")
+                    pgn = puzzle.getPgn(),
+                    solution = puzzle.getPuzzleSolution().joinToString(separator = ","),
+                    originalSolution = puzzle.getPuzzleSolution().joinToString(separator = ","),
+                    originalPgn = puzzle.getPgn()
                 )
+            )
+        }
+    }
+
+    fun asyncUpdateToDB(puzzle: DailyPuzzle, callback: (Result<Unit>) -> Unit = { }) {
+        callbackAfterAsync(callback) {
+            historyDao.updatePuzzle(
+                puzzle.getPuzzleId(),
+                puzzle.getMovesPlayedAsPgn(),
+                puzzle.getPuzzleSolution().joinToString(separator = ",")
             )
         }
     }
@@ -88,34 +100,34 @@ class DailyPuzzleChessRepository(
      * Using a boolean to distinguish between both options is a questionable design decision.
      */
     fun fetchDailyPuzzle(
-        id: String,
         mustSaveToDB: Boolean = false,
         callback: (Result<DailyPuzzle>) -> Unit
     ) {
-        asyncMaybeGetTodayPuzzleFromDB(id) { maybeEntity ->
-            val maybePuzzle = maybeEntity.getOrNull()
-            if (maybePuzzle != null) {
-                callback(
-                    Result.success(
-                        DailyPuzzle(
-                            puzzleId = maybePuzzle.id,
-                            puzzlePgn = maybePuzzle.pgn,
-                            puzzleSolution = maybePuzzle.solution.split(",").toMutableList()
+        asyncMaybeGetTodayPuzzleFromDB { maybeEntity ->
+            maybeEntity.onSuccess { puzzleEntity ->
+                if (puzzleEntity?.isTodayQuote() == true) {
+                    callback(
+                        Result.success(
+                            DailyPuzzle(
+                                puzzleId = puzzleEntity.id,
+                                puzzlePgn = puzzleEntity.pgn,
+                                puzzleSolution = puzzleEntity.solution.split(",").toMutableList()
+                            )
                         )
                     )
-                )
-            } else {
-                asyncGetTodayPuzzleFromAPI { apiResult ->
-                    apiResult.onSuccess { dailyPuzzle ->
-                        asyncSaveToDB(dailyPuzzle) { saveToDbResult ->
-                            saveToDbResult.onSuccess {
-                                callback(Result.success(dailyPuzzle))
-                            }.onFailure {
-                                callback(
-                                    if (mustSaveToDB) Result.failure(it) else Result.success(
-                                        dailyPuzzle
+                } else {
+                    asyncGetTodayPuzzleFromAPI { apiResult ->
+                        apiResult.onSuccess { dailyPuzzle ->
+                            asyncSaveToDB(dailyPuzzle) { saveToDbResult ->
+                                saveToDbResult.onSuccess {
+                                    callback(Result.success(dailyPuzzle))
+                                }.onFailure {
+                                    callback(
+                                        if (mustSaveToDB) Result.failure(it) else Result.success(
+                                            dailyPuzzle
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }

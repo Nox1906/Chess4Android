@@ -10,6 +10,7 @@ import pt.isel.pdm.chess4android.views.Tile
 import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
+
 private const val PUZZLE_EXTRA = "DailyPuzzleActivity.Extra.DailyGame"
 
 class DailyPuzzleActivity : AppCompatActivity() {
@@ -29,8 +30,10 @@ class DailyPuzzleActivity : AppCompatActivity() {
             displayCurrentPlayer()
         }
         if (puzzle == null) {
-            if (viewModel.dailyGameNotFetched())
+            if (viewModel.dailyGameNotFetched()){
                 viewModel.getDailyPuzzle()
+            }
+
 
         }else{
             viewModel.setDailyGame(puzzle)
@@ -59,6 +62,8 @@ class DailyPuzzleActivity : AppCompatActivity() {
                         viewModel.previousTile = null
                         viewModel.removeSolutionMove()
                         displayCurrentPlayer()
+                        viewModel.saveCurrentStateInDB()
+
                     } else if (viewModel.onMove && tile.piece != null) {
                         viewModel.onMove = false
                         viewModel.previousTile?.tile?.isSel = false
@@ -98,4 +103,5 @@ class DailyPuzzleActivity : AppCompatActivity() {
             binding.currentPlayerView.text = getString(R.string.solution_achieved)
         }
     }
+
 }

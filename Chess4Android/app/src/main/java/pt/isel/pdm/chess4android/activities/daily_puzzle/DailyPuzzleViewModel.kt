@@ -4,12 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import pt.isel.pdm.chess4android.common.*
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import pt.isel.pdm.chess4android.views.Tile
 import pt.isel.pdm.chess4android.common.*
+import java.util.*
 
 private const val ACTIVITY_VIEW_STATE = "Activity.ViewState"
 
@@ -27,7 +26,6 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
 
     fun getDailyPuzzle() {
         getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.fetchDailyPuzzle(
-            "adsd",
             true,
             callback = { res ->
                 res.onSuccess { state.set(ACTIVITY_VIEW_STATE, it) }
@@ -71,6 +69,17 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
         return getDailyGame()!!.currentPlayer.isWhiteSide()
     }
 
+    fun saveCurrentStateInDB() {
+        dailyPuzzle.value?.let {
+            getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.asyncUpdateToDB(
+                it
+            ) { saveToDbResult ->
+                saveToDbResult.onSuccess {
+                }.onFailure {
+                }
+            }
+        }
+    }
 }
 
 

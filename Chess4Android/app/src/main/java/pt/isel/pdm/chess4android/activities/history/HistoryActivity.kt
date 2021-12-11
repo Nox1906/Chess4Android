@@ -22,7 +22,13 @@ class HistoryActivity : AppCompatActivity() {
 
     companion object {
         fun buildIntent(origin: Activity, puzzle: DailyPuzzle): Intent {
-            val msg = Intent(origin, DailyPuzzleActivity::class.java)
+            val msg: Intent = if (puzzle.getPuzzleSolution()[0] !="") {
+                Intent(origin, DailyPuzzleActivity::class.java)
+            } else {
+                puzzle.originalPgn?.let { puzzle.setPgn(it) }
+                puzzle.originalSolution?.let { puzzle.setSolution(it) }
+                Intent(origin, SolvedDailyPuzzleActivity::class.java)
+            }
             msg.putExtra(PUZZLE_EXTRA, puzzle)
             return msg
         }
