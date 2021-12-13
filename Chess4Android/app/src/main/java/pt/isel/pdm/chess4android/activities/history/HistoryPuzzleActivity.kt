@@ -9,49 +9,45 @@ import pt.isel.pdm.chess4android.databinding.ActivityHistoryPuzzleBinding
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
 private const val PUZZLE_EXTRA = "HistoryActivity.Extra.DailyPuzzle"
-private const val ORIGINAL_PUZZLE_EXTRA = "HistoryActivity.Extra.OriginalDailyPuzzle"
 
 class HistoryPuzzleActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityHistoryPuzzleBinding.inflate(layoutInflater)
     }
-    private val solvedDailyPuzzleViewModel: HistoryPuzzleViewModel by viewModels()
+    private val historyPuzzleViewModel: HistoryPuzzleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val puzzle = intent.extras?.getParcelable<DailyPuzzle>(PUZZLE_EXTRA)
-        val originalPuzzle = intent.extras?.getParcelable<OriginalDailyPuzzle>(ORIGINAL_PUZZLE_EXTRA)
-        var newPuzzle : DailyPuzzle? = null
-        if (puzzle != null && originalPuzzle != null) {
-
-            newPuzzle = DailyPuzzle(
-                puzzle.getPuzzleId(),
-                originalPuzzle.originalPuzzlePgn,
-                originalPuzzle.originalPuzzleSolution
+        val puzzleDbObj = intent.getParcelableExtra<DailyPuzzleDbObject>(PUZZLE_EXTRA)
+        var puzzle : DailyPuzzle? = null
+        if (puzzleDbObj != null) {
+            puzzle = DailyPuzzle(
+                puzzleDbObj.puzzleId,
+                puzzleDbObj.originalPuzzlePgn,
+                puzzleDbObj.originalPuzzleSolution
             )
-            binding.boardView.displayBoard(newPuzzle.board.getBoardPositions())
+            binding.boardView.displayBoard(puzzle.board.getBoardPositions())
         }
 
-        solvedDailyPuzzleViewModel.puzzle.observe(this){
+        historyPuzzleViewModel.puzzleObserver.observe(this){
             val intent = Intent(this, DailyPuzzleActivity::class.java)
-            intent.putExtra("HistoryActivity.Extra.DailyPuzzle", solvedDailyPuzzleViewModel.getPuzzle())
+            intent.putExtra(PUZZLE_EXTRA, it)
             startActivity(intent)
         }
 
         binding.solvePuzzleButton.setOnClickListener {
-            if (solvedDailyPuzzleViewModel.getPuzzle() == null){
-                solvedDailyPuzzleViewModel.setPuzzle(newPuzzle)
-                solvedDailyPuzzleViewModel.saveCurrentStateInDB()
+            if (historyPuzzleViewModel.getPuzzle() == null){
+                historyPuzzleViewModel.setPuzzle(puzzle)
+                historyPuzzleViewModel.saveCurrentStateInDB()
             }else{
-                solvedDailyPuzzleViewModel.getPuzzleFromDB(
-                    solvedDailyPuzzleViewModel.getPuzzle()?.getPuzzleId()
-                )
+                historyPuzzleViewModel.getPuzzleFromDB()
             }
         }
         binding.seeSolutionButton.setOnClickListener {
             val intent = Intent(this, SolvedPuzzleActivity::class.java)
-            intent.putExtra("HistoryActivity.Extra.DailyPuzzle", puzzle)
+            val solvedPuzzle = DailyPuzzle(puzzleDbObj!!.puzzleId, puzzleDbObj.puzzlePgn, puzzleDbObj.puzzleSolution)
+            intent.putExtra(PUZZLE_EXTRA, solvedPuzzle)
             startActivity(intent)
         }
     }

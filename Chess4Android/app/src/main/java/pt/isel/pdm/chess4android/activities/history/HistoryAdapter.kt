@@ -11,16 +11,15 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import pt.isel.pdm.chess4android.R
-import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
 class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val puzzleId: TextView = itemView.findViewById(R.id.puzzleId)
     private val isSolved: TextView = itemView.findViewById(R.id.solved)
 
-    fun bindTo(dailyPuzzle: DailyPuzzle, resources: Resources, onItemCLick: () -> Unit) {
-        puzzleId.text = dailyPuzzle.getPuzzleId()
+    fun bindTo(puzzleDbObj: DailyPuzzleDbObject, resources: Resources, onItemCLick: () -> Unit) {
+        puzzleId.text = puzzleDbObj.puzzleId
         isSolved.text =
-            if (dailyPuzzle.getPuzzleSolution()[0] == "") resources.getString(R.string.textView_isSolved) else resources.getString(
+            if (puzzleDbObj.puzzleSolution[0] == "") resources.getString(R.string.textView_isSolved) else resources.getString(
                 R.string.textView_notSolved
             )
         itemView.setOnClickListener {
@@ -28,10 +27,8 @@ class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             startAnimation {
                 onItemCLick()
                 itemView.isClickable = true
-
             }
         }
-
     }
 
     private fun startAnimation(onAnimationEnd: () -> Unit) {
@@ -55,9 +52,9 @@ class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class HistoryAdapter(
-    private val dataSource: List<DailyPuzzle>,
+    private val dataSource: List<DailyPuzzleDbObject>,
     private val resources: Resources,
-    private val onItemCLick: (DailyPuzzle) -> Unit
+    private val onItemCLick: (DailyPuzzleDbObject) -> Unit
 ) :
     RecyclerView.Adapter<HistoryItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {

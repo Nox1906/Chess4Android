@@ -13,4 +13,6 @@
     <string name="history_button">Histórico</string>
     <string name="textView_isSolved">Resolvido</string>
     <string name="textView_notSolved">Não resolvido</string>
+    <string name="solve_puzzle">Resolver Puzzle</string>
+    <string name="see_solution">Ver solução</string>
 </resources>

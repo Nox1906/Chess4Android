@@ -3,57 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.history.HistoryPuzzleActivity">
+    android:layout_height="match_parent">
 
     <pt.isel.pdm.chess4android.views.BoardView
         android:id="@+id/boardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </pt.isel.pdm.chess4android.views.BoardView>
-
-    <Button
-        android:id="@+id/solve_puzzle_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#9C8BC34A"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="#050505"
-        android:textStyle="bold"
-        android:text="@string/solve_puzzle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/see_solution_button"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boardView"
-        app:layout_constraintVertical_bias="0.643" />
 
     <Button
         android:id="@+id/see_solution_button"
         style="@android:style/Widget.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="48dp"
         android:backgroundTint="#9C8BC34A"
         android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/see_solution"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#050505"
         android:textStyle="bold"
-        android:text="@string/see_solution"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boardView"
-        app:layout_constraintVertical_bias="0.643"
+        app:layout_constraintEnd_toStartOf="@+id/boardView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/solve_puzzle_button"
+        app:layout_constraintVertical_bias="0.213"
         tools:text="See Solution" />
 
+    <Button
+        android:id="@+id/solve_puzzle_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="128dp"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/solve_puzzle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#050505"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/boardView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

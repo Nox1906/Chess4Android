@@ -12,7 +12,6 @@ import pt.isel.pdm.chess4android.databinding.ActivityHistoryBinding
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
 private const val PUZZLE_EXTRA = "HistoryActivity.Extra.DailyPuzzle"
-private const val ORIGINAL_PUZZLE_EXTRA = "HistoryActivity.Extra.OriginalDailyPuzzle"
 
 class HistoryActivity : AppCompatActivity() {
 
@@ -22,19 +21,17 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun buildIntent(origin: Activity, puzzle: DailyPuzzle, originalDailyPuzzle: OriginalDailyPuzzle?): Intent {
-            val msg: Intent =
-                if (puzzle.getPuzzleSolution()[0] != "") {
-                    Intent(origin, DailyPuzzleActivity::class.java)
-                } else {
-                    Intent(origin, HistoryPuzzleActivity::class.java)
+        fun buildIntent(origin: Activity, puzzleDbObj: DailyPuzzleDbObject): Intent {
+            val msg: Intent?
+            if (puzzleDbObj.puzzleSolution[0] != "") { //not solved
+                val dp = DailyPuzzle(puzzleDbObj.puzzleId, puzzleDbObj.puzzlePgn, puzzleDbObj.puzzleSolution)
+                msg = Intent(origin, DailyPuzzleActivity::class.java)
+                msg.putExtra(PUZZLE_EXTRA, dp)
 
-                }
-            val extras = Bundle()
-
-            extras.putParcelable(ORIGINAL_PUZZLE_EXTRA,originalDailyPuzzle)
-            extras.putParcelable(PUZZLE_EXTRA, puzzle)
-            msg.putExtras(extras)
+            } else { //solved
+                msg = Intent(origin, HistoryPuzzleActivity::class.java)
+                msg.putExtra(PUZZLE_EXTRA, puzzleDbObj)
+            }
             return msg
         }
     }
@@ -47,20 +44,20 @@ class HistoryActivity : AppCompatActivity() {
             binding.puzzleList.adapter = HistoryAdapter(
                 it,
                 historyViewModel.getApplication<DailyPuzzleChessApplication>().resources
-            ) { puzzle ->
-                startActivity(buildIntent(this, puzzle, historyViewModel.originalDailyPuzzle))
+            ) { puzzleDbObj ->
+                startActivity(buildIntent(this, puzzleDbObj))
             }
         }
     }
 
-    override fun onResume() {
+    override fun onResume() { //update history adapter when back pressed
         super.onResume()
         (historyViewModel.loadHistory()).observe(this) {
             binding.puzzleList.adapter = HistoryAdapter(
                 it,
                 historyViewModel.getApplication<DailyPuzzleChessApplication>().resources
-            ) { puzzle ->
-                startActivity(buildIntent(this, puzzle,historyViewModel.originalDailyPuzzle))
+            ) { puzzleDbObj ->
+                startActivity(buildIntent(this, puzzleDbObj))
             }
         }
     }

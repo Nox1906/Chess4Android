@@ -11,7 +11,7 @@ import pt.isel.pdm.chess4android.R
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 
 
-private const val PUZZLE_EXTRA = "DailyPuzzleActivity.Extra.DailyGame"
+private const val PUZZLE_EXTRA = "HistoryActivity.Extra.DailyPuzzle"
 
 class DailyPuzzleActivity : AppCompatActivity() {
 
@@ -24,17 +24,13 @@ class DailyPuzzleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val puzzle = intent.getParcelableExtra<DailyPuzzle>(PUZZLE_EXTRA)
+        val puzzle = intent.extras?.getParcelable<DailyPuzzle>(PUZZLE_EXTRA)
         viewModel.dailyPuzzle.observe(this) {
             binding.boardView.displayBoard(it.board.getBoardPositions())
             displayCurrentPlayer()
         }
         if (puzzle == null) {
-            if (viewModel.dailyGameNotFetched()){
                 viewModel.getDailyPuzzle()
-            }
-
-
         }else{
             viewModel.setDailyGame(puzzle)
         }

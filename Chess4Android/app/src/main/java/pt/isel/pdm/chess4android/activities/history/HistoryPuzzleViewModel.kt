@@ -6,25 +6,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import pt.isel.pdm.chess4android.common.DailyPuzzleChessApplication
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
+
 private const val ACTIVITY_VIEW_STATE = "Activity.ViewState"
+
 class HistoryPuzzleViewModel(application: Application, private val state: SavedStateHandle) :
     AndroidViewModel(application) {
-    val puzzle: LiveData<DailyPuzzle> = state.getLiveData(ACTIVITY_VIEW_STATE)
+    val puzzleObserver: LiveData<DailyPuzzle> = state.getLiveData(ACTIVITY_VIEW_STATE)
 
-    fun getPuzzleFromDB(id: String?){
-        if (id != null) {
-            getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.asyncGetPuzzleByIdFromDB(id) { result ->
-                result.onSuccess {
-                    val puzzle = it?.let { it1 -> DailyPuzzle(it1.id,it.pgn,it.solution.split(",").toMutableList()) }
-                    state.set(ACTIVITY_VIEW_STATE,puzzle)
-                }.onFailure {
+    fun getPuzzleFromDB() {
+        getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.asyncGetPuzzleByIdFromDB(
+            puzzleObserver.value!!.getPuzzleId()
+        ) { result ->
+            result.onSuccess {
+                val puzzle = it?.let { it1 ->
+                    DailyPuzzle(
+                        puzzleId = it1.id,
+                        puzzlePgn = it.pgn,
+                        puzzleSolution = it.solution.split(",").toMutableList()
+                    )
                 }
+                state.set(ACTIVITY_VIEW_STATE, puzzle)
+            }.onFailure {
             }
         }
+
     }
 
     fun saveCurrentStateInDB() {
-        puzzle.value?.let {
+        puzzleObserver.value?.let {
             getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.asyncUpdateToDB(
                 it
             ) { saveToDbResult ->
@@ -34,11 +43,12 @@ class HistoryPuzzleViewModel(application: Application, private val state: SavedS
             }
         }
     }
-    fun getPuzzle() : DailyPuzzle? {
-        return puzzle.value
+
+    fun getPuzzle(): DailyPuzzle? {
+        return puzzleObserver.value
     }
 
-    fun setPuzzle(puzzle: DailyPuzzle?){
-        state.set(ACTIVITY_VIEW_STATE,puzzle)
+    fun setPuzzle(puzzle: DailyPuzzle?) {
+        state.set(ACTIVITY_VIEW_STATE, puzzle)
     }
 }
