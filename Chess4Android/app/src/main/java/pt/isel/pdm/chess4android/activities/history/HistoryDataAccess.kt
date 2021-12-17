@@ -15,7 +15,7 @@ data class PuzzleEntity(
     val originalPgn: String,
     val timestamp: Date = Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS)),
 ) {
-    fun isTodayQuote(): Boolean =
+    fun isTodayPuzzleDaily(): Boolean =
         timestamp.toInstant().compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) == 0
 }
 

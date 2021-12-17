@@ -22,7 +22,6 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
 
     var onMove: Boolean = false
     var previousTile: PreviousTile? = null
-    //var resultOfDailyPuzzle: ResultOfDailyPuzzle? = null
 
     fun getDailyPuzzle() {
         getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.fetchDailyPuzzle(

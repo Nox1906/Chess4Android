@@ -3,16 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/drawable/list_item_background.xml" value="0.125" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_daily_puzzle.xml" value="0.10758377425044091" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_about.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_item.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_puzzle.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solved_puzzle.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_daily_puzzle.xml" value="0.20679012345679013" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_history_puzzle.xml" value="0.25" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_main.xml" value="0.20679012345679013" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle.xml" value="0.20364583333333333" />
-        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_puzzle.xml" value="0.228125" />
-        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solve_puzzle.xml" value="0.1" />
-        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solved_daily_puzzle.xml" value="0.228125" />
-        <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solved_puzzle.xml" value="0.228125" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_credits.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_main_activity.xml" value="0.1" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_solve_puzzle_activity.xml" value="0.1" />
@@ -30,21 +34,12 @@
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_credits.xml" value="0.1" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle.xml" value="0.14" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle_landscape.xml" value="0.1265625" />
-        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solve_puzzle.xml" value="0.12" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_credits.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/user/OneDrive/Documentos/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/menu/menu_main_activity.xml" value="0.22" />
       </map>
     </option>
-  </component>
-  <component name="EntryPointsManager">
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="androidx.room.Delete" />
-      <item index="1" class="java.lang.String" itemvalue="androidx.room.Insert" />
-      <item index="2" class="java.lang.String" itemvalue="androidx.room.Query" />
-    </list>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

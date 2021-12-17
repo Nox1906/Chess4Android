@@ -5,7 +5,6 @@ import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class DailyPuzzleChessRepository(
     private val dailyPuzzleService: DailyPuzzleService,
@@ -113,7 +112,7 @@ class DailyPuzzleChessRepository(
     ) {
         asyncMaybeGetTodayPuzzleFromDB { maybeEntity ->
             maybeEntity.onSuccess { puzzleEntity ->
-                if (puzzleEntity?.isTodayQuote() == true) {
+                if (puzzleEntity?.isTodayPuzzleDaily() == true) {
                     callback(
                         Result.success(
                             DailyPuzzle(
