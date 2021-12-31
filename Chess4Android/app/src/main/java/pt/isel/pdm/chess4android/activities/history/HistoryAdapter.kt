@@ -15,6 +15,7 @@ import pt.isel.pdm.chess4android.R
 class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val puzzleId: TextView = itemView.findViewById(R.id.puzzleId)
     private val isSolved: TextView = itemView.findViewById(R.id.solved)
+    private val puzzleDate: TextView = itemView.findViewById(R.id.puzzle_date)
 
     fun bindTo(puzzleDbObj: DailyPuzzleDbObject, resources: Resources, onItemCLick: () -> Unit) {
         puzzleId.text = puzzleDbObj.puzzleId
@@ -29,6 +30,7 @@ class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 itemView.isClickable = true
             }
         }
+        puzzleDate.text= puzzleDbObj.puzzleDate
     }
 
     private fun startAnimation(onAnimationEnd: () -> Unit) {

@@ -54,6 +54,10 @@ dependencies {
     def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+    // Work Manager API
+    def work_version = "2.7.1"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
 
     // Retrofit with GSON
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

@@ -30,8 +30,8 @@ class DailyPuzzleActivity : AppCompatActivity() {
             displayCurrentPlayer()
         }
         if (puzzle == null) {
-                viewModel.getDailyPuzzle()
-        }else{
+            viewModel.getDailyPuzzle()
+        } else if (viewModel.dailyPuzzle.value == null) {
             viewModel.setDailyGame(puzzle)
         }
 

@@ -16,7 +16,7 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
-        tools:text="@tools:sample/date/day_of_week" />
+        tools:text="@tools:sample/full_names" />
 
     <TextView
         android:id="@+id/solved"
@@ -25,5 +25,12 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"
         tools:text="@tools:sample/full_names" />
+    <TextView
+        android:id="@+id/puzzle_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
+        tools:text="@tools:sample/date/ddmmyy" />
 
 </LinearLayout>

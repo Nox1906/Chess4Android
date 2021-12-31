@@ -16,7 +16,8 @@ data class DailyPuzzleDbObject(
     var puzzlePgn: String,
     var puzzleSolution: MutableList<String>,
     var originalPuzzlePgn: String,
-    var originalPuzzleSolution: MutableList<String>
+    var originalPuzzleSolution: MutableList<String>,
+    var puzzleDate : String
 ) : Parcelable
 
 class HistoryViewModel(application: Application) :
@@ -38,7 +39,8 @@ class HistoryViewModel(application: Application) :
                         puzzlePgn = it.pgn,
                         puzzleSolution = it.solution.split(",").toMutableList(),
                         originalPuzzlePgn = it.originalPgn,
-                        originalPuzzleSolution = it.originalSolution.split(",").toMutableList()
+                        originalPuzzleSolution = it.originalSolution.split(",").toMutableList(),
+                        puzzleDate = it.timestamp.toString()
                     )
                 }
             },

@@ -5,6 +5,7 @@ import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class DailyPuzzleChessRepository(
     private val dailyPuzzleService: DailyPuzzleService,
@@ -34,7 +35,7 @@ class DailyPuzzleChessRepository(
     }
 
     /**
-     * Asynchronously gets the daily quote from the remote API.
+     * Asynchronously gets the daily puzzle from the remote API.
      * @param callback the function to be called to signal the completion of the
      * asynchronous operation, which is called in the MAIN THREAD.
      */
@@ -66,7 +67,7 @@ class DailyPuzzleChessRepository(
     }
 
     /**
-     * Asynchronously saves the daily quote to the local DB.
+     * Asynchronously saves the daily puzzle to the local DB.
      * @param callback the function to be called to signal the completion of the
      * asynchronous operation, which is called in the MAIN THREAD.
      */
@@ -95,12 +96,12 @@ class DailyPuzzleChessRepository(
     }
 
     /**
-     * Asynchronously gets the quote of day, either from the local DB, if available, or from
+     * Asynchronously gets the daily puzzle, either from the local DB, if available, or from
      * the remote API.
      *
      * @param mustSaveToDB  indicates if the operation is only considered successful if all its
      * steps, including saving to the local DB, succeed. If false, the operation is considered
-     * successful regardless of the success of saving the quote in the local DB (the last step).
+     * successful regardless of the success of saving the puzzle in the local DB (the last step).
      * @param callback the function to be called to signal the completion of the
      * asynchronous operation, which is called in the MAIN THREAD
      *
@@ -112,7 +113,7 @@ class DailyPuzzleChessRepository(
     ) {
         asyncMaybeGetTodayPuzzleFromDB { maybeEntity ->
             maybeEntity.onSuccess { puzzleEntity ->
-                if (puzzleEntity?.isTodayPuzzleDaily() == true) {
+                if (puzzleEntity?.isTodayQuote() == true) {
                     callback(
                         Result.success(
                             DailyPuzzle(

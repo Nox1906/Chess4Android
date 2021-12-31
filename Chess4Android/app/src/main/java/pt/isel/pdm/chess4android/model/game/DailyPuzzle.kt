@@ -88,7 +88,7 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
     fun getPuzzleSolution() : MutableList<String> = this.puzzleSolution
 
     fun getDailyGameStatus() : Boolean{
-        return puzzleSolution.isEmpty()
+        return puzzleSolution.isEmpty() || puzzleSolution[0]==""
     }
     fun getPuzzleId() : String = this.puzzleId
 
