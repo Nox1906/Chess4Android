@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_daily_puzzle.xml" value="0.10758377425044091" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_about.xml" value="0.12708333333333333" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_daily_puzzle.xml" value="0.12708333333333333" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history.xml" value="0.12708333333333333" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_item.xml" value="0.12708333333333333" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_history_puzzle.xml" value="0.12708333333333333" />
-        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.12708333333333333" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_regular_game.xml" value="0.1875" />
         <entry key="..\:/Faculdade/5 Semestre/PDM/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout/activity_solved_puzzle.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_daily_puzzle.xml" value="0.20679012345679013" />
         <entry key="..\:/Users/lealr/GitHub/PDM-2122i-LI5X-G10/Chess4Android/app/src/main/res/layout-land/activity_history_puzzle.xml" value="0.25" />
@@ -46,5 +48,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.264" />
+      </ProjectState>
+    </option>
   </component>
 </project>

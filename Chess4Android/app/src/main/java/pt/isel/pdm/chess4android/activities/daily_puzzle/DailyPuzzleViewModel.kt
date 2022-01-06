@@ -7,8 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import pt.isel.pdm.chess4android.common.*
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import pt.isel.pdm.chess4android.views.Tile
-import pt.isel.pdm.chess4android.common.*
-import java.util.*
 
 private const val ACTIVITY_VIEW_STATE = "Activity.ViewState"
 
@@ -23,6 +21,7 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
     var onMove: Boolean = false
     var previousTile: PreviousTile? = null
 
+
     fun getDailyPuzzle() {
         getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.fetchDailyPuzzle(
             true,
@@ -31,7 +30,6 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
                 res.onFailure { state.set(ACTIVITY_VIEW_STATE, null) }
             })
     }
-
 
     private fun getDailyGame(): DailyPuzzle? {
         return dailyPuzzle.value

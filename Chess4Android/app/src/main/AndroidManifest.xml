@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chess4Android">
         <activity
+            android:name=".activities.regular_game.RegularGameActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.history.SolvedPuzzleActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Chess4Android</string>
     <string name="title">Chess Royale</string>
+    <string name="fetch_new_game_button">New Game</string>
     <string name="fetch_puzzle_button">Daily Game</string>
     <string name="about_button">About</string>
     <string name="authors">Authors</string>

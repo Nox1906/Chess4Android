@@ -11,7 +11,7 @@ class PngCompiler() {
 
     val types = HashMap<Char, Types>()
 
-    fun init() {
+     init {
         types['B'] = Types.B
         types['Q'] = Types.Q
         types['K'] = Types.K

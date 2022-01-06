@@ -14,14 +14,11 @@ import pt.isel.pdm.chess4android.model.player.Player
 @Parcelize
 class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, private var puzzleSolution: MutableList<String>) : Game() {
 
-
-
     /**
      * set pieces on board from a Portable Game Notation (PGN)
      */
     init {
         val pngCompiler = PngCompiler()
-        pngCompiler.init()
         puzzlePgn.split("\\s".toRegex()).forEach { item ->
             val move: Move? = pngCompiler.getMove(item)
             if (move != null){
@@ -50,41 +47,7 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
         return this.makeMove(move)
     }
 
-    /**
-     * will check if can make the move and do it
-     * @return move succeeded
-     */
-    override fun makeMove(move: Move): Boolean {
-        val sourcePiece = move.getStart()?.getPiece() ?: return false
 
-        // valid move?
-        if (!sourcePiece.canMove(board, move.getStart()!!, move.getEnd()!!))
-            return false
-
-        //Kill?
-        if (move is AttackMove) {
-            move.setKilledPiece(move.getEnd()!!.getPiece()!!)
-            move.getKilledPiece()?.setIsKilled(true)
-            board.removePiece(move.getKilledPiece()!!)
-        }
-
-        // castling?
-        if (move is CastlingMove) {
-            if (!move.getCastlePiece().getFirstMove()) return false
-            board.changeRookOnCastling(move)
-        }
-
-        movesPlayed.add(move)
-        if (sourcePiece.getFirstMove()) sourcePiece.setFirstMove()
-        board.changePosition(sourcePiece, move.getStart(), move.getEnd())
-
-        if (this.currentPlayer == players[0]) {
-            this.currentPlayer = players[1];
-        } else {
-            this.currentPlayer = players[0];
-        }
-        return true
-    }
     fun getPuzzleSolution() : MutableList<String> = this.puzzleSolution
 
     fun getDailyGameStatus() : Boolean{
@@ -107,7 +70,5 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
             this.puzzleSolution= solution
         }
     }
-
-
 
 }

@@ -6,6 +6,22 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/fetch_new_game_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="217dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/fetch_new_game_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0E0E0D"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <Button
         android:id="@+id/fetch_puzzle_button"
         style="@android:style/Widget.Button"
         android:layout_width="217dp"
@@ -19,7 +35,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+        app:layout_constraintTop_toBottomOf="@+id/fetch_new_game_button" />
 
     <Button
         android:id="@+id/about_button"

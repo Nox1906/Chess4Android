@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Chess4Android</string>
     <string name="title">Xadrez</string>
+    <string name="fetch_new_game_button">Novo Jogo</string>
     <string name="fetch_puzzle_button">Puzzle do dia</string>
     <string name="about_button">Sobre</string>
     <string name="authors">Autores</string>
