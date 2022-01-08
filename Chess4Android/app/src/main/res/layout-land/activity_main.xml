@@ -10,7 +10,8 @@
         style="@android:style/Widget.Button"
         android:layout_width="217dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="48dp"
         android:backgroundTint="#9C8BC34A"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/fetch_new_game_button"
@@ -18,47 +19,17 @@
         android:textColor="#0E0E0D"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleView" />
-
-    <Button
-        android:id="@+id/fetch_puzzle_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="217dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="#9C8BC34A"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/fetch_puzzle_button"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="#0E0E0D"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fetch_new_game_button" />
-
-    <Button
-        android:id="@+id/about_button"
-        style="@android:style/Widget.Button"
-        android:layout_width="217dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#9C8BC34A"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/about_button"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="#050505"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_button" />
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toEndOf="@+id/pieces_img"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/history_button"
         style="@android:style/Widget.Button"
         android:layout_width="217dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="48dp"
         android:backgroundTint="#9C8BC34A"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/history_button"
@@ -66,25 +37,63 @@
         android:textColor="#050505"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.803"
+        app:layout_constraintStart_toEndOf="@+id/titleView"
         app:layout_constraintTop_toBottomOf="@+id/fetch_puzzle_button" />
+
+    <Button
+        android:id="@+id/about_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="217dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="48dp"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/about_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#050505"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.803"
+        app:layout_constraintStart_toEndOf="@+id/titleView"
+        app:layout_constraintTop_toBottomOf="@+id/history_button" />
+
+    <Button
+        android:id="@+id/fetch_puzzle_button"
+        style="@android:style/Widget.Button"
+        android:layout_width="217dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="48dp"
+        android:backgroundTint="#9C8BC34A"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/fetch_puzzle_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0E0E0D"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toEndOf="@+id/pieces_img"
+        app:layout_constraintTop_toBottomOf="@+id/fetch_new_game_button" />
 
     <ImageView
         android:id="@+id/pieces_img"
-        android:layout_width="287dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="297dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="96dp"
         android:contentDescription="Chess pieces image"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pieces_img" />
 
     <TextView
         android:id="@+id/titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="219dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/title"
         android:textAllCaps="false"
@@ -92,8 +101,6 @@
         android:textSize="34sp"
         android:textStyle="bold"
         android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pieces_img" />
 </androidx.constraintlayout.widget.ConstraintLayout>

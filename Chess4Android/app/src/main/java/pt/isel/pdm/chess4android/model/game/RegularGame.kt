@@ -1,6 +1,7 @@
 package pt.isel.pdm.chess4android.model.game
 
 import kotlinx.parcelize.Parcelize
+import pt.isel.pdm.chess4android.model.board.Board
 import pt.isel.pdm.chess4android.model.board.moves.Move
 import pt.isel.pdm.chess4android.model.game.pngComp.PngCompiler
 import pt.isel.pdm.chess4android.model.player.Player
@@ -11,6 +12,9 @@ class RegularGame(private var puzzlePgn: String) : Game() {
     init {
         if(puzzlePgn!="")
         init(puzzlePgn)
+    }
+    fun setPgn(pgn:String){
+        puzzlePgn=pgn
     }
 
     override fun playerMove(
@@ -23,5 +27,9 @@ class RegularGame(private var puzzlePgn: String) : Game() {
         if (player.isWhiteSide() != currentPlayer.isWhiteSide()) return false
         val move = board.getPossibleMove(player, startX, startY, endX, endY) ?: return false
         return this.makeMove(move)
+    }
+    fun resetBoard(){
+        board= Board()
+        movesPlayed.clear()
     }
 }

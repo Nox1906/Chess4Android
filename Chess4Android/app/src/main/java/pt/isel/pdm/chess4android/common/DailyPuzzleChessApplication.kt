@@ -1,16 +1,12 @@
 package pt.isel.pdm.chess4android.common
 
 import android.app.Application
-import android.content.res.Resources
-import android.util.Log
 import androidx.room.Room
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import pt.isel.pdm.chess4android.activities.daily_puzzle.DownloadDailyPuzzleWorker
-import pt.isel.pdm.chess4android.activities.history.PuzzleEntity
-import pt.isel.pdm.chess4android.activities.history.PuzzleHistoryDataBase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -44,10 +40,14 @@ class DailyPuzzleChessApplication : Application() {
             )
     }
     val dailyPuzzleHistoryDB by lazy {
-        Room.databaseBuilder(this, PuzzleHistoryDataBase::class.java, "chessDB").build()
+        Room.databaseBuilder(this, PuzzleHistoryDataBase::class.java, "chessDB").fallbackToDestructiveMigration().build()
         //change to databaseBuilder()
     }
     val dailyPuzzleChessRepository by lazy {
-        DailyPuzzleChessRepository(dailyPuzzleService, dailyPuzzleHistoryDB.getHistoryDataBase())
+        DailyPuzzleRepository(dailyPuzzleService, dailyPuzzleHistoryDB.getHistoryDataBase())
+    }
+
+    val regularGameRepository by lazy {
+        RegularGameRepository(dailyPuzzleHistoryDB.getHistoryDataBase())
     }
 }

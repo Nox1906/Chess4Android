@@ -18,19 +18,7 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
      * set pieces on board from a Portable Game Notation (PGN)
      */
     init {
-        val pngCompiler = PngCompiler()
-        puzzlePgn.split("\\s".toRegex()).forEach { item ->
-            val move: Move? = pngCompiler.getMove(item)
-            if (move != null){
-                board.setDailyPositions(currentPlayer, move)
-            }
-            for (piece in board.getPieces(currentPlayer.isWhiteSide())) {
-                if (piece.getType() != move?.type) continue
-                move.setStart(board.getPiecePosition(piece))
-                if (!move.checkDisambiguating()) continue
-                if (makeMove(move)) break
-            }
-        }
+        init(puzzlePgn)
     }
 
 
@@ -60,15 +48,5 @@ class DailyPuzzle(private val puzzleId : String, private var puzzlePgn: String, 
     }
     fun getPgn(): String = this.puzzlePgn
 
-    fun setPgn(pgn : String?){
-        if (pgn != null) {
-            this.puzzlePgn= pgn
-        }
-    }
-    fun setSolution(solution : MutableList<String>?){
-        if (solution != null) {
-            this.puzzleSolution= solution
-        }
-    }
 
 }

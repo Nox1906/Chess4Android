@@ -23,7 +23,6 @@ data class PuzzleEntity(
         timestamp.toInstant().compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) == 0
 }
 
-
 /**
  * Contains converters used by the ROOM ORM to map between Kotlin types and MySQL types
  */
@@ -66,9 +65,10 @@ interface PuzzleHistoryDao {
 
     @Query("UPDATE regular_game SET pgn =:pgn WHERE id = 1")
     fun updateGame(pgn: String)
+
 }
 
-@Database(entities = [PuzzleEntity::class, RegularGameEntity::class], version = 1)
+@Database(entities = [PuzzleEntity::class, RegularGameEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class PuzzleHistoryDataBase : RoomDatabase() {
     abstract fun getHistoryDataBase(): PuzzleHistoryDao

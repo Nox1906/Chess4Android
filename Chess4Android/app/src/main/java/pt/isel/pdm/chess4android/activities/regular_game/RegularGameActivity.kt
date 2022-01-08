@@ -2,15 +2,16 @@ package pt.isel.pdm.chess4android.activities.regular_game
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import pt.isel.pdm.chess4android.R
-import pt.isel.pdm.chess4android.activities.daily_puzzle.DailyPuzzleViewModel
 import pt.isel.pdm.chess4android.databinding.ActivityRegularGameBinding
 import pt.isel.pdm.chess4android.model.game.RegularGame
 import pt.isel.pdm.chess4android.views.Tile
 
-private const val PUZZLE_EXTRA = "HistoryActivity.Extra.RegularGame"
 
 class RegularGameActivity : AppCompatActivity() {
 
@@ -23,13 +24,13 @@ class RegularGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.regularGame.observe(this) {
+        viewModel.regularGameObserver.observe(this) {
             binding.boardView.displayBoard(it.board.getBoardPositions())
             displayCurrentPlayer()
         }
 
-        if (viewModel.regularGame.value == null)
-            viewModel.setRegularGame(RegularGame())
+        if (viewModel.regularGameObserver.value == null)
+            viewModel.maybeGetRegularGameFromDB()
 
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->
             if (tile.piece?.isWhite() != viewModel.isWhitePlayer() && !viewModel.onMove) {
@@ -52,6 +53,7 @@ class RegularGameActivity : AppCompatActivity() {
                     viewModel.previousTile?.tile?.piece = null
                     viewModel.previousTile?.tile?.isSel = false
                     viewModel.previousTile = null
+                    viewModel.saveCurrentStateInDB()
                     displayCurrentPlayer()
 
                 } else if (viewModel.onMove && tile.piece != null) {
@@ -80,9 +82,30 @@ class RegularGameActivity : AppCompatActivity() {
     }
 
     private fun displayCurrentPlayer() {
-            if (viewModel.isWhitePlayer())
-                binding.currentPlayerView.text = getString(R.string.current_player_white)
-            else
-                binding.currentPlayerView.text = getString(R.string.current_player_black)
+        if (viewModel.isWhitePlayer())
+            binding.currentPlayerView.text = getString(R.string.current_player_white)
+        else
+            binding.currentPlayerView.text = getString(R.string.current_player_black)
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.regular_game_menu, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+             R.id.reset-> {
+
+                 viewModel.regularGameObserver.value?.resetBoard()
+                 binding.boardView.invalidate()
+                 binding.boardView.displayBoard(viewModel.regularGameObserver.value?.board?.getBoardPositions())
+
+                 viewModel.saveCurrentStateInDB()
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

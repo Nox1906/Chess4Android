@@ -5,6 +5,7 @@ import pt.isel.pdm.chess4android.model.board.Board
 import pt.isel.pdm.chess4android.model.board.moves.AttackMove
 import pt.isel.pdm.chess4android.model.board.moves.CastlingMove
 import pt.isel.pdm.chess4android.model.board.moves.Move
+import pt.isel.pdm.chess4android.model.game.pngComp.PngCompiler
 import pt.isel.pdm.chess4android.model.player.AwayPlayer
 import pt.isel.pdm.chess4android.model.player.HomePlayer
 import pt.isel.pdm.chess4android.model.player.Player
@@ -15,11 +16,9 @@ import java.util.*
  * Abstract class of all games*/
 
 abstract class Game : Parcelable {
-//    var originalSolution: MutableList<String>? = null
-//    var originalPgn: String? = null
     protected var movesPlayed: LinkedList<Move> = LinkedList()
     var board: Board = Board()
-    protected var players: Array<Player> =
+    private var players: Array<Player> =
         arrayOf(HomePlayer(whiteSide = true), AwayPlayer(whiteSide = false))
     var currentPlayer: Player = players[0]
 
@@ -30,6 +29,22 @@ abstract class Game : Parcelable {
     fun getMovesPlayedAsPgn(): String {
 
         return movesPlayed.joinToString(separator = " ")
+    }
+
+    fun init(puzzlePgn: String) {
+        val pngCompiler = PngCompiler()
+        puzzlePgn.split("\\s".toRegex()).forEach { item ->
+            val move: Move? = pngCompiler.getMove(item)
+            if (move != null) {
+                board.setDailyPositions(currentPlayer, move)
+            }
+            for (piece in board.getPieces(currentPlayer.isWhiteSide())) {
+                if (piece.getType() != move?.type) continue
+                move.setStart(board.getPiecePosition(piece))
+                if (!move.checkDisambiguating()) continue
+                if (makeMove(move)) break
+            }
+        }
     }
 
     /**

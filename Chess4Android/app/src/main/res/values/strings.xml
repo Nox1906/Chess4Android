@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Chess4Android</string>
     <string name="title">Chess Royale</string>
-    <string name="fetch_new_game_button">New Game</string>
-    <string name="fetch_puzzle_button">Daily Game</string>
+    <string name="fetch_new_game_button">Play Chess</string>
+    <string name="fetch_puzzle_button">Daily Puzzle</string>
     <string name="about_button">About</string>
     <string name="authors">Authors</string>
     <string name="puzzle_from">Daily puzzle from:</string>
@@ -18,4 +18,5 @@
     <string name="textView_notSolved">Not solved</string>
     <string name="solve_puzzle">Solve puzzle</string>
     <string name="see_solution">" See solution"</string>
+    <string name="reset_board">Reset Board</string>
 </resources>

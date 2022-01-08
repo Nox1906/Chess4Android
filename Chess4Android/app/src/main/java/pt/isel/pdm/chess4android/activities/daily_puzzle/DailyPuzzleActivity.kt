@@ -30,9 +30,9 @@ class DailyPuzzleActivity : AppCompatActivity() {
             displayCurrentPlayer()
         }
         if (puzzle == null) {
-            viewModel.getDailyPuzzle()
+            viewModel.fetchDailyPuzzle()
         } else if (viewModel.dailyPuzzle.value == null) {
-            viewModel.setDailyGame(puzzle)
+            viewModel.setDailyPuzzle(puzzle)
         }
 
         binding.boardView.onTileClickedListener = { tile: Tile, row: Int, column: Int ->

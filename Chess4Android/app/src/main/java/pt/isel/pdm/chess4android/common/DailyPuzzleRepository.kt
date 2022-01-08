@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DailyPuzzleChessRepository(
+class DailyPuzzleRepository(
     private val dailyPuzzleService: DailyPuzzleService,
     private val historyDao: PuzzleHistoryDao
 ) {

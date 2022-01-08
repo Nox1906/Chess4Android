@@ -3,6 +3,7 @@ package pt.isel.pdm.chess4android.activities.daily_puzzle
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import pt.isel.pdm.chess4android.common.*
 import pt.isel.pdm.chess4android.model.game.DailyPuzzle
@@ -15,41 +16,38 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
 
 
     val dailyPuzzle: LiveData<DailyPuzzle> = state.getLiveData(ACTIVITY_VIEW_STATE)
-
+    private val _error: MutableLiveData<Throwable> = MutableLiveData()
     data class PreviousTile(val tile: Tile, val y: Int, val x: Int)
 
     var onMove: Boolean = false
     var previousTile: PreviousTile? = null
 
 
-    fun getDailyPuzzle() {
+    fun fetchDailyPuzzle() {
         getApplication<DailyPuzzleChessApplication>().dailyPuzzleChessRepository.fetchDailyPuzzle(
             true,
             callback = { res ->
                 res.onSuccess { state.set(ACTIVITY_VIEW_STATE, it) }
-                res.onFailure { state.set(ACTIVITY_VIEW_STATE, null) }
+                res.onFailure { _error.value=it }
             })
     }
 
-    private fun getDailyGame(): DailyPuzzle? {
+    private fun getDailyPuzzle(): DailyPuzzle? {
         return dailyPuzzle.value
     }
 
-    fun dailyGameNotFetched(): Boolean {
-        return dailyPuzzle.value == null
-    }
 
     fun solutionIsDone(): Boolean? {
         return dailyPuzzle.value?.getDailyGameStatus()
     }
 
-    fun setDailyGame(dailyPuzzle: DailyPuzzle) {
+    fun setDailyPuzzle(dailyPuzzle: DailyPuzzle) {
         state.set(ACTIVITY_VIEW_STATE, dailyPuzzle)
     }
 
     fun canMove(column: Int, row: Int): Boolean? {
-        return getDailyGame()?.playerMove(
-            getDailyGame()!!.currentPlayer,
+        return getDailyPuzzle()?.playerMove(
+            getDailyPuzzle()!!.currentPlayer,
             previousTile!!.x,
             previousTile!!.y,
             column,
@@ -63,7 +61,7 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
 
 
     fun isWhitePlayer(): Boolean {
-        return getDailyGame()!!.currentPlayer.isWhiteSide()
+        return getDailyPuzzle()!!.currentPlayer.isWhiteSide()
     }
 
     fun saveCurrentStateInDB() {
@@ -73,6 +71,7 @@ class DailyPuzzleViewModel(application: Application, private val state: SavedSta
             ) { saveToDbResult ->
                 saveToDbResult.onSuccess {
                 }.onFailure {
+                    _error.value=Throwable("Failed to save in DB")
                 }
             }
         }
