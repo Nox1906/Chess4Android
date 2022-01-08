@@ -1,11 +1,15 @@
-package pt.isel.pdm.chess4android.activities.history
+package pt.isel.pdm.chess4android.common
 
 import androidx.room.*
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 
-
+@Entity(tableName = "regular_game")
+data class RegularGameEntity(
+    @PrimaryKey val id: Int=1,
+    val pgn: String
+)
 @Entity(tableName = "history_puzzle")
 data class PuzzleEntity(
     @PrimaryKey val id: String,
@@ -15,9 +19,10 @@ data class PuzzleEntity(
     val originalPgn: String,
     val timestamp: Date = Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS)),
 ) {
-    fun isTodayQuote(): Boolean =
+    fun isTodayPuzzle(): Boolean =
         timestamp.toInstant().compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) == 0
 }
+
 
 /**
  * Contains converters used by the ROOM ORM to map between Kotlin types and MySQL types
@@ -49,9 +54,21 @@ interface PuzzleHistoryDao {
 
     @Query("UPDATE history_puzzle SET pgn =:pgn,solution=:solution WHERE id = :id")
     fun updatePuzzle(id: String, pgn: String, solution: String)
+
+    @Insert
+    fun insert(game: RegularGameEntity)
+
+    @Delete
+    fun delete(game: RegularGameEntity)
+
+    @Query("SELECT * FROM regular_game WHERE id = 1")
+    fun getGame(): RegularGameEntity
+
+    @Query("UPDATE regular_game SET pgn =:pgn WHERE id = 1")
+    fun updateGame(pgn: String)
 }
 
-@Database(entities = [PuzzleEntity::class], version = 1)
+@Database(entities = [PuzzleEntity::class, RegularGameEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class PuzzleHistoryDataBase : RoomDatabase() {
     abstract fun getHistoryDataBase(): PuzzleHistoryDao

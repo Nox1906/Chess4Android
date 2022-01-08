@@ -5,7 +5,6 @@ import pt.isel.pdm.chess4android.model.game.DailyPuzzle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class DailyPuzzleChessRepository(
     private val dailyPuzzleService: DailyPuzzleService,
@@ -71,7 +70,7 @@ class DailyPuzzleChessRepository(
      * @param callback the function to be called to signal the completion of the
      * asynchronous operation, which is called in the MAIN THREAD.
      */
-    fun asyncSaveToDB(puzzle: DailyPuzzle, callback: (Result<Unit>) -> Unit = { }) {
+    private fun asyncSaveToDB(puzzle: DailyPuzzle, callback: (Result<Unit>) -> Unit = { }) {
         callbackAfterAsync(callback) {
             historyDao.insert(
                 PuzzleEntity(
@@ -113,7 +112,7 @@ class DailyPuzzleChessRepository(
     ) {
         asyncMaybeGetTodayPuzzleFromDB { maybeEntity ->
             maybeEntity.onSuccess { puzzleEntity ->
-                if (puzzleEntity?.isTodayQuote() == true) {
+                if (puzzleEntity?.isTodayPuzzle() == true) {
                     callback(
                         Result.success(
                             DailyPuzzle(
