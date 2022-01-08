@@ -18,7 +18,7 @@ import java.util.*
 abstract class Game : Parcelable {
     protected var movesPlayed: LinkedList<Move> = LinkedList()
     var board: Board = Board()
-    private var players: Array<Player> =
+    protected var players: Array<Player> =
         arrayOf(HomePlayer(whiteSide = true), AwayPlayer(whiteSide = false))
     var currentPlayer: Player = players[0]
 

@@ -29,7 +29,8 @@ class RegularGame(private var puzzlePgn: String) : Game() {
         return this.makeMove(move)
     }
     fun resetBoard(){
-        board= Board()
+        board.resetBoard()
         movesPlayed.clear()
+        currentPlayer = players[0]
     }
 }

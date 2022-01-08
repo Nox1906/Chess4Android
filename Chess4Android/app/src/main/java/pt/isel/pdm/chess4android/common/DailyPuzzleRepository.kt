@@ -12,7 +12,7 @@ class DailyPuzzleRepository(
 ) {
 
     /**
-     * Asynchronously gets the daily quote from the local DB, if available.
+     * Asynchronously gets the daily puzzle from the local DB, if available.
      * @param callback the function to be called to signal the completion of the
      * asynchronous operation, which is called in the MAIN THREAD.
      */

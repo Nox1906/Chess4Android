@@ -70,10 +70,6 @@ class RegularGameViewModel(application: Application, private val state: SavedSta
         return regularGameObserver.value
     }
 
-    fun setRegularGame(regularGame: RegularGame) {
-        state.set(ACTIVITY_VIEW_STATE, regularGame)
-    }
-
     fun canMove(column: Int, row: Int): Boolean? {
         return getRegularGame()?.playerMove(
             getRegularGame()!!.currentPlayer,

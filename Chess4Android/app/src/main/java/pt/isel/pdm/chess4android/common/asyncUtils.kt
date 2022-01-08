@@ -29,17 +29,3 @@ fun <T> callbackAfterAsync(callback: (Result<T>) -> Unit, asyncAction: () -> T) 
         }
     }
 }
-
-/**
- * Dispatches the execution of [asyncAction] on the appropriate thread pool.
- * This is a teaching tool. It will soon be discarded.
- * The [asyncAction] result is published to the returned [LiveData] instance
- */
-fun <T> publishInLiveDataAfterAsync(asyncAction: () -> T): LiveData<Result<T>> {
-    val toPublish = MutableLiveData<Result<T>>()
-    ioExecutor.submit {
-        val result = executeAndCollectResult(asyncAction)
-        toPublish.postValue(result)
-    }
-    return toPublish
-}

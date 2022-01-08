@@ -1,5 +1,6 @@
 package pt.isel.pdm.chess4android.activities.regular_game
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -97,11 +98,9 @@ class RegularGameActivity : AppCompatActivity() {
              R.id.reset-> {
 
                  viewModel.regularGameObserver.value?.resetBoard()
-                 binding.boardView.invalidate()
-                 binding.boardView.displayBoard(viewModel.regularGameObserver.value?.board?.getBoardPositions())
-
                  viewModel.saveCurrentStateInDB()
-
+                 this.finish()
+                 startActivity(Intent(this, RegularGameActivity::class.java))
                 true
             }
 
